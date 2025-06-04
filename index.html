@@ -3,217 +3,165 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Xxxporn - Layout</title>
+  <title>Player Vídeo Simples</title>
   <style>
-    /* Reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      color: white;
+      font-family: Arial, sans-serif;
     }
 
-    /* Cabeçalho topo */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 15px;
-      background: #000;
-      position: fixed;
-      top: 0;
+    .video-container {
+      position: relative;
+      width: 90vw;
+      max-width: 600px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    video {
       width: 100%;
-      z-index: 10;
-      align-items: center;
-    }
-    .header button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 5px;
-    }
-    .header button img {
-      filter: invert(100%);
+      display: block;
+      border-radius: 8px;
+      background: black;
     }
 
-    /* Barra lateral direita - centralizada verticalmente */
-    .sidebar-right {
-      position: fixed;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 10;
-    }
-[04/06, 05:47] Ia: .sidebar-right button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #fff;
-    }
-    .sidebar-right button img {
-      filter: invert(100%);
-      width: 32px;
-      height: 32px;
-    }
-    .sidebar-right .follow {
-      position: relative;
-    }
-    .sidebar-right .follow .plus {
+    /* Botão play/pause grande central */
+    #playPauseOverlay {
       position: absolute;
-      bottom: 0;
-      right: 0;
-      background: #ff2a68;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      color: #fff;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 18px;
-      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      color: white;
       cursor: pointer;
+[04/06, 05:55] Ia: opacity: 0.7;
+      transition: opacity 0.3s;
+      user-select: none;
+      display: none;
+    }
+    .video-container.paused #playPauseOverlay {
+      display: block;
+    }
+    #playPauseOverlay:hover {
+      opacity: 1;
     }
 
-    /* Rodapé */
-    .footer {
-      background: #000;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 8px 0;
-      position: fixed;
+    /* Áreas invisíveis para avançar/voltar 10s */
+    .touch-area {
+      position: absolute;
+      top: 0;
       bottom: 0;
-      width: 100%;
-      border-top: 1px solid #222;
+      width: 33%;
+      cursor: pointer;
       z-index: 10;
     }
-    .footer button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #fff;
+    .touch-left {
+      left: 0;
+    }
+    .touch-right {
+      right: 0;
+    }
+
+    /* Controles mute e fullscreen */
+    .video-controls {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 10px;
-      gap: 2px;
-      padding: 4px 6px;
-[04/06, 05:47] Ia: transition: color 0.3s;
+      gap: 12px;
+      z-index: 20;
     }
-    .footer button img {
-      filter: invert(100%);
-      width: 24px;
-      height: 24px;
+
+    .video-controls button {
+      background: rgba(255 255 255 / 0.15);
+      border: none;
+      color: white;
+      font-size: 20px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      user-select: none;
     }
-    .footer button.live img {
-      width: 36px;
-      height: 36px;
-      filter: none; /* Usar cor vermelha da imagem */
-    }
-    .footer button.live {
-      color: #ff2a68;
-    }
-    .footer button.active {
-      color: #ff2a68;
+
+    .video-controls button:hover {
+      background: rgba(255 255 255 / 0.35);
     }
   </style>
 </head>
 <body>
+  <div class="video-container paused" id="videoContainer">
+    <video id="video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" preload="metadata"></video>
+[04/06, 05:56] Ia: <div id="playPauseOverlay" aria-label="Play/Pause">▶️</div>
 
-  <!-- Cabeçalho topo -->
-  <header class="header">
-    <div class="left">
-      <button id="search-btn" aria-label="Pesquisar">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/search.png" alt="Pesquisar" width="26" height="26"/>
-      </button>
-    </div>
-    <div class="right">
-      <button id="profile-btn" aria-label="Perfil">
-        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/male-user.png" alt="Perfil" width="26" height="26"/>
-      </button>
-    </div>
-  </header>
+    <div class="touch-area touch-left" aria-label="Voltar 10 segundos"></div>
+    <div class="touch-area touch-right" aria-label="Avançar 10 segundos"></div>
 
-  <!-- Barra lateral direita -->
-  <div class="sidebar-right">
-    <button class="follow" aria-label="Seguir">
-      <img src="https://img.icons8.com/ios-glyphs/30/ffffff/male-user.png" alt="Seguir" width="26" height="26"/>
-      <span class="plus">+</span>
-    </button>
-    <button aria-label="Gostar">
-[04/06, 05:47] Ia: <img src="https://img.icons8.com/ios-filled/50/ffffff/loading-heart.png" alt="Gostar" width="26" height="26"/>
-    </button>
-    <button aria-label="Comentar">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/comments.png" alt="Comentar" width="26" height="26"/>
-    </button>
-    <button aria-label="Baixar vídeo">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/download.png" alt="Baixar vídeo" width="26" height="26"/>
-    </button>
-    <button aria-label="Denunciar">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/flag.png" alt="Denunciar" width="26" height="26"/>
-    </button>
+    <div class="video-controls">
+      <button id="muteBtn" aria-label="Silenciar/Ativar som">🔊</button>
+      <button id="fullscreenBtn" aria-label="Tela cheia">⛶</button>
+    </div>
   </div>
 
-  <!-- Rodapé -->
-  <footer class="footer">
-    <button aria-label="Início">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Início" width="26" height="26"/>
-      <span>Início</span>
-    </button>
-    <button aria-label="Categorias">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/category.png" alt="Categorias" width="26" height="26"/>
-      <span>Categorias</span>
-    </button>
-    <button class="live" aria-label="Live">
-      <img src="https://img.icons8.com/?size=100&id=HAdDrhGGO64N&format=png&color=ff2a68" alt="Live" width="38" height="38"/>
-      <span>Live</span>
-    </button>
-    <button aria-label="Anúncios">
-[04/06, 05:47] Ia: <img src="https://img.icons8.com/ios-filled/50/ffffff/ads.png" alt="Anúncios" width="26" height="26"/>
-      <span>Anúncios</span>
-    </button>
-    <button aria-label="Notificações">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/alarm.png" alt="Notificações" width="26" height="26"/>
-      <span>Notificações</span>
-    </button>
-  </footer>
-
   <script>
-    document.getElementById('search-btn').addEventListener('click', () => {
-      alert('Abrir campo de pesquisa');
+    const video = document.getElementById('video');
+    const playPauseOverlay = document.getElementById('playPauseOverlay');
+    const videoContainer = document.getElementById('videoContainer');
+    const muteBtn = document.getElementById('muteBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const touchLeft = document.querySelector('.touch-left');
+    const touchRight = document.querySelector('.touch-right');
+
+    // Play / Pause toggle
+    function togglePlay() {
+      if(video.paused) {
+        video.play();
+        videoContainer.classList.remove('paused');
+        playPauseOverlay.textContent = '⏸️';
+      } else {
+        video.pause();
+        videoContainer.classList.add('paused');
+        playPauseOverlay.textContent = '▶️';
+      }
+    }
+
+    playPauseOverlay.addEventListener('click', togglePlay);
+[04/06, 05:56] Ia: video.addEventListener('click', togglePlay);
+
+    // Atualizar botão quando vídeo acaba
+    video.addEventListener('ended', () => {
+      videoContainer.classList.add('paused');
+      playPauseOverlay.textContent = '▶️';
     });
 
-    document.getElementById('profile-btn').addEventListener('click', () => {
-      alert('Abrir perfil do usuário');
+    // Áreas invisíveis para avançar/voltar 10s
+    touchLeft.addEventListener('click', () => {
+      video.currentTime = Math.max(0, video.currentTime - 10);
     });
 
-    document.querySelectorAll('footer button').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('footer button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        alert('Você clicou em: ' + button.getAttribute('aria-label'));
-      });
+    touchRight.addEventListener('click', () => {
+      video.currentTime = Math.min(video.duration, video.currentTime + 10);
     });
 
-    document.querySelectorAll('.sidebar-right button').forEach(button => {
-      button.addEventListener('click', () => {
-        alert('Você clicou em: ' + button.getAttribute('aria-label'));
-      });
+    // Mute / unmute
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteBtn.textContent = video.muted ? '🔇' : '🔊';
+    });
+
+    // Fullscreen toggle
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        video.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
     });
   </script>
 </body>
