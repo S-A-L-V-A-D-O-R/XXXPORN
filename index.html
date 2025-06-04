@@ -1,451 +1,201 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XXXPORN - Plataforma Adulto</title>
-    <style>
-        /* Reset e base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Tela aviso maioridade */
-        #ageCheck {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .age-box {
-            text-align: center;
-        }
-
-        .age-box p {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .age-box button {
-            margin: 10px;
-            padding: 10px 25px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* Header topo */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: #111;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 15px;
-            border-bottom: 1px solid #222;
-            z-index: 1000;
-        }
-
-        header .left,
-        header .right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        header button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 28px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        header button:focus {
-            outline: none;
-        }
-
-        /* Main conteúdo */
-        main {
-            margin-top: 60px;
-            max-width: 720px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 10px 15px 80px;
-        }
-
-        /* Vídeo container */
-        #videoPlayer {
-            position: relative;
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Controles do vídeo - aparecem só no hover */
-        #videoControls {
-            position: absolute;
-            bottom: 12px;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            padding: 6px 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        #videoPlayer:hover #videoControls {
-            opacity: 1;
-        }
-
-        #videoControls button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 26px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        #videoControls button:focus {
-            outline: none;
-        }
-
-        /* Navegação inferior */
-        nav#bottomNav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #111;
-            display: flex;
-            justify-content: space-around;
-            border-top: 1px solid #222;
-            padding: 10px 0 12px;
-            z-index: 1000;
-        }
-
-        nav#bottomNav button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 28px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            user-select: none;
-            transition: color 0.3s;
-        }
-
-        nav#bottomNav button.active {
-            color: #f00;
-        }
-
-        /* Botões laterais direita */
-        #sideButtons {
-            position: fixed;
-            right: 10px;
-            top: 40%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 999;
-        }
-
-        #sideButtons button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 28px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        #sideButtons button:focus {
-            outline: none;
-        }
-
-        /* Categoria */
-        #categoryContent {
-            margin-top: 20px;
-        }
-
-        #categoryContent h2 {
-            margin-bottom: 12px;
-            font-size: 1.5rem;
-        }
-
-        #categoryList {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        #categoryList button {
-            background: #222;
-            border: none;
-            padding: 8px 14px;
-            color: #fff;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #categoryList button:hover {
-            background: #444;
-        }
-
-        /* Perfil */
-        #profileContent {
-            margin-top: 20px;
-            background: #111;
-            padding: 15px 20px;
-            border-radius: 12px;
-        }
-
-        #profileContent h2 {
-            font-size: 1.7rem;
-            margin-bottom: 16px;
-        }
-
-        #profileContent p {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        #profileContent button {
-            margin-top: 10px;
-            padding: 10px 18px;
-            font-size: 1rem;
-            font-weight: 700;
-            background: #f00;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.3s;
-        }
-
-        #profileContent button:hover {
-            background: #c00;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXXporn</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=HAdDrhGGO64N&format=png&color=000000">
 </head>
-
 <body>
 
-    <!-- Aviso maioridade -->
-    <div id="ageCheck" role="dialog" aria-modal="true" aria-labelledby="ageCheckTitle">
-        <h2 id="ageCheckTitle">Você é maior de 18 anos?</h2>
-        <div class="age-box">
-            <button id="btnYes" aria-label="Sim, sou maior de idade">Sim</button>
-            <button id="btnNo" aria-label="Não, não sou maior de idade">Não</button>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header role="banner" aria-label="Cabeçalho do site">
-        <div class="left">
-            <button id="searchBtn" title="Pesquisar" aria-label="Pesquisar">🔍</button>
-        </div>
-        <div class="right">
-            <button id="profileBtn" title="Perfil" aria-label="Ir para Perfil">👤</button>
-        </div>
-    </header>
-
-    <!-- Main conteúdo -->
-    <main role="main" tabindex="-1">
-        <!-- Video Player -->
-        <section id="videoPlayer" aria-label="Player de vídeo">
-            <video id="mainVideo" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" preload="metadata" playsinline muted autoplay loop></video>
-            <div id="videoControls" aria-label="Controles do vídeo">
-                <button id="btnBackward" title="Voltar 10 segundos" aria-label="Voltar 10 segundos">⏪</button>
-                <button id="btnPlayPause" title="Play/Pause" aria-label="Play/Pause">⏯️</button>
-                <button id="btnForward" title="Avançar 10 segundos" aria-label="Avançar 10 segundos">⏩</button>
-                <button id="btnMute" title="Mudo" aria-label="Alternar som">🔈</button>
-                <button id="btnFullscreen" title="Tela cheia" aria-label="Tela cheia">⛶</button>
-            </div>
-        </section>
-
-        <!-- Categorias -->
-        <section id="categoryContent" style="display:none;" aria-label="Categorias">
-            <h2>Categorias</h2>
-            <div id="categoryList">
-                <button data-cat="fetish">Fetish</button>
-                <button data-cat="amateur">Amateur</button>
-                <button data-cat="anal">Anal</button>
-                <button data-cat="teen">Teen</button>
-                <button data-cat="lesbian
-                <button data-cat="lesbian">Lesbian</button>
-                <button data-cat="couples">Couples</button>
-            </div>
-        </section>
-
-        <!-- Perfil -->
-        <section id="profileContent" style="display:none;" aria-label="Perfil do usuário">
-            <h2>Perfil do Usuário</h2>
-            <p id="username">Nome do Usuário: João Doe</p>
-            <p id="email">Email: joao.doe@email.com</p>
-            <button id="logoutBtn" title="Sair" aria-label="Sair">Sair</button>
-        </section>
-
-    </main>
-
-    <!-- Navegação inferior -->
-    <nav id="bottomNav" aria-label="Navegação inferior">
-        <button id="homeBtn" aria-label="Ir para a Página Inicial" class="active">
-            <span>🏠</span><span>Home</span>
-        </button>
-        <button id="categoryNavBtn" aria-label="Ir para Categorias">
-            <span>📂</span><span>Categorias</span>
-        </button>
-        <button id="profileNavBtn" aria-label="Ir para o Perfil">
-            <span>👤</span><span>Perfil</span>
-        </button>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#"><img src="https://icons8.com.br/icon/E8VbCjkcXpRk/ads" alt="Anúncios" class="icon"></a></li>
+            <li><a href="#"><img src="https://icons8.com.br/icon/73/home" alt="Início" class="icon"></a></li>
+            <li><a href="#"><img src="https://icons8.com.br/icon/ZMS7XMuKStHF/loading-heart" alt="Notificações" class="icon"></a></li>
+            <li><a href="#"><img src="https://icons8.com.br/icon/7819/male-user" alt="Perfil" class="icon"></a></li>
+            <li><a href="#"><img src="https://icons8.com.br/icon/13705/category" alt="Categorias" class="icon"></a></li>
+            <li><a href="#"><img src="https://icons8.com.br/icon/54481/alarm" alt="Alertas" class="icon"></a></li>
+        </ul>
     </nav>
 
-    <!-- Botões laterais (exemplo de interação) -->
-    <div id="sideButtons">
-        <button id="likeBtn" aria-label="Curtir vídeo">
-            👍
-        </button>
-        <button id="dislikeBtn" aria-label="Descurtir vídeo">
-            👎
-        </button>
-    </div>
+    <!-- Conteúdo Principal -->
+    <main>
+        <div class="video-container">
+            <video id="videoPlayer" width="100%" controls>
+                <source src="video/sample-video.mp4" type="video/mp4">
+                Seu navegador não suporta vídeo.
+            </video>
+            <div class="video-controls">
+                <button id="rewind" class="control-btn">⏪ 10s</button>
+                <button id="mute" class="control-btn">🔊</button>
+                <button id="forward" class="control-btn">⏩ 10s</button>
+                <button id="fullscreen" class="control-btn">⛶</button>
+            </div>
+        </div>
 
-    <script>
-        // Controle de visibilidade do aviso de maioridade
-        const ageCheck = document.getElementById('ageCheck');
-        const btnYes = document.getElementById('btnYes');
-        const btnNo = document.getElementById('btnNo');
+        <!-- Área de Categorias -->
+        <div class="categories">
+            <h2>Categorias</h2>
+            <div class="category-list">
+                <div class="category">
+                    <img src="https://via.placeholder.com/150" alt="Categoria 1">
+                    <p>Categoria 1</p>
+                </div>
+                <div class="category">
+                    <img src="https://via.placeholder.com/150" alt="Categoria 2">
+                    <p>Categoria 2</p>
+                </div>
+                <div class="category">
+                    <img src="https://via.placeholder.com/150" alt="Categoria 3">
+                    <p>Categoria 3</p>
+                </div>
+                <!-- Adicione mais categorias conforme necessário -->
+            </div>
+        </div>
+    </main>
 
-        btnYes.addEventListener('click', () => {
-            ageCheck.style.display = 'none';
-        });
-
-        btnNo.addEventListener('click', () => {
-            window.location.href = 'https://www.google.com'; // Redireciona para outro site
-        });
-
-        // Funções para controle de vídeo
-        const video = document.getElementById('mainVideo');
-        const btnPlayPause = document.getElementById('btnPlayPause');
-        const btnBackward = document.getElementById('btnBackward');
-        const btnForward = document.getElementById('btnForward');
-        const btnMute = document.getElementById('btnMute');
-        const btnFullscreen = document.getElementById('btnFullscreen');
-        
-        btnPlayPause.addEventListener('click', () => {
-            if (video.paused) {
-                video.play();
-                btnPlayPause.innerHTML = '⏸️';
-            } else {
-                video.pause();
-                btnPlayPause.innerHTML = '⏯️';
-            }
-        });
-
-        btnBackward.addEventListener('click', () => {
-            video.currentTime -= 10;
-        });
-
-        btnForward.addEventListener('click', () => {
-            video.currentTime += 10;
-        });
-
-        btnMute.addEventListener('click', () => {
-            video.muted = !video.muted;
-            btnMute.innerHTML = video.muted ? '🔇' : '🔈';
-        });
-
-        btnFullscreen.addEventListener('click', () => {
-            if (video.requestFullscreen) {
-                video.requestFullscreen();
-            } else if (video.mozRequestFullScreen) { // Firefox
-                video.mozRequestFullScreen();
-            } else if (video.webkitRequestFullscreen) { // Chrome and Safari
-                video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) { // IE/Edge
-                video.msRequestFullscreen();
-            }
-        });
-
-        // Controle de navegação inferior
-        const homeBtn = document.getElementById('homeBtn');
-        const categoryNavBtn = document.getElementById('categoryNavBtn');
-        const profileNavBtn = document.getElementById('profileNavBtn');
-
-        homeBtn.addEventListener('click', () => {
-            homeBtn.classList.add('active');
-            categoryNavBtn.classList.remove('active');
-            profileNavBtn.classList.remove('active');
-            document.getElementById('categoryContent').style.display = 'none';
-            document.getElementById('profileContent').style.display = 'none';
-        });
-
-        categoryNavBtn.addEventListener('click', () => {
-            homeBtn.classList.remove('active');
-            categoryNavBtn.classList.add('active');
-            profileNavBtn.classList.remove('active');
-            document.getElementById('categoryContent').style.display = 'block';
-            document.getElementById('profileContent').style.display = 'none';
-        });
-
-        profileNavBtn.addEventListener('click', () => {
-            homeBtn.classList.remove('active');
-            categoryNavBtn.classList.remove('active');
-            profileNavBtn.classList.add('active');
-            document.getElementById('categoryContent').style.display = 'none';
-            document.getElementById('profileContent').style.display = 'block';
-        });
-
-        // Função para simular o logout
-        const logoutBtn = document.getElementById('logoutBtn');
-        logoutBtn.addEventListener('click', () => {
-            alert('Você saiu!');
-            document.getElementById('profileContent').style.display = 'none';
-            homeBtn.classList.add('active');
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #181818;
+    color: white;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #222;
+    padding: 10px;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Conteúdo Principal */
+.main {
+    padding: 20px;
+}
+
+/* Video */
+.video-container {
+    width: 100%;
+    position: relative;
+}
+
+video {
+    width: 100%;
+    background-color: black;
+}
+
+.video-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.control-btn {
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.control-btn:hover {
+    background-color: #555;
+}
+
+/* Categorias */
+.categories {
+    padding: 20px;
+}
+
+.category-list {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.category {
+    text-align: center;
+}
+
+.category img {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+}
+
+.category p {
+    margin-top: 10px;
+}
+// Controle de vídeo
+const videoPlayer = document.getElementById('videoPlayer');
+const rewindButton = document.getElementById('rewind');
+const forwardButton = document.getElementById('forward');
+const muteButton = document.getElementById('mute');
+const fullscreenButton = document.getElementById('fullscreen');
+
+// Função para avançar 10 segundos
+rewindButton.addEventListener('click', () => {
+    videoPlayer.currentTime -= 10;
+});
+
+// Função para retroceder 10 segundos
+forwardButton.addEventListener('click', () => {
+    videoPlayer.currentTime += 10;
+});
+
+// Função para ativar/desativar som
+muteButton.addEventListener('click', () => {
+    if (videoPlayer.muted) {
+        videoPlayer.muted = false;
+        muteButton.textContent = "🔊"; // Som ligado
+    } else {
+        videoPlayer.muted = true;
+        muteButton.textContent = "🔇"; // Som desligado
+    }
+});
+
+// Função para tela cheia
+fullscreenButton.addEventListener('click', () => {
+    if (videoPlayer.requestFullscreen) {
+        videoPlayer.requestFullscreen();
+    } else if (videoPlayer.mozRequestFullScreen) { // Firefox
+        videoPlayer.mozRequestFullScreen();
+    } else if (videoPlayer.webkitRequestFullscreen) { // Chrome e Safari
+        videoPlayer.webkitRequestFullscreen();
+    } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
+        videoPlayer.msRequestFullscreen();
+    }
+});
