@@ -15,45 +15,125 @@
     header {
       background-color: #111;
       padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    nav {
+    .search {
+      flex-grow: 1;
+      margin: 0 10px;
+    }
+    .search input {
+      width: 100%;
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    nav.bottom {
       background-color: #222;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
       display: flex;
       justify-content: space-around;
-      padding: 10px;
+      padding: 10px 0;
     }
-    nav a {
+    nav.bottom a {
       color: #fff;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 16px;
     }
     .content {
       padding: 20px;
+      padding-bottom: 70px;
     }
     iframe {
       width: 100%;
       height: 300px;
       margin-top: 20px;
+border: none;
+    }
+    .video-container {
+      position: relative;
+      margin-bottom: 50px;
+    }
+    .side-buttons {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .side-buttons div {
+      text-align: center;
+      font-size: 14px;
+    }
+    .side-buttons img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+    .side-buttons button {
+      background: none;
       border: none;
+      color: white;
+      font-size: 20px;
     }
   </style>
 </head>
 <body>
-  <header>Xxxporn</header>
-  <nav>
-    <a href="#">Início</a>
-    <a href="#">Categorias</a>
-    <a href="#">Anuncie</a>
-    <a href="#">Contato</a>
-  </nav>
-  <div class="content">
+  <header>
+    <div><strong>Xxxporn</strong></div>
+    <div class="search">
+      <input type="text" placeholder="Pesquisar...">
+    </div>
+    <div><a href="#perfil" style="color:#fff;">👤</a></div>
+  </header>
+
+  <div class="content" id="inicio">
     <h2>Vídeos em destaque</h2>
-    <iframe src="https://www.xvideos.com/embedframe/123456"></iframe>
-    <iframe src="https://www.xvideos.com/embedframe/654321"></iframe>
+
+    <div class="video-container">
+      <iframe src="https://www.xvideos.com/embedframe/123456"></iframe>
+      <div class="side-buttons">
+        <div><img src="https://via.placeholder.com/40" alt="perfil"><br><button>➕</button></div>
+        <div><button>❤️</button></div>
+        <div><button>💾</button></div>
+        <div><button>💬</button></div>
+      </div>
+    </div>
+
+</div>
+
+  <div class="content" id="categorias">
+    <h2>Categorias</h2>
+    <ul>
+      <li>Hetero</li>
+      <li>Gay</li>
+      <li>Fetiches</li>
+      <li>Amador</li>
+    </ul>
   </div>
+
+  <div class="content" id="anuncie">
+    <h2>Anuncie aqui</h2>
+    <p>Entre em contato: <a href="https://wa.me/SEUNUMERO" style="color:#0f9;">WhatsApp</a></p>
+  </div>
+
+  <div class="content" id="perfil">
+    <h2>Seu perfil</h2>
+    <p>Aqui pode colocar suas configurações futuramente.</p>
+  </div>
+
+  <nav class="bottom">
+    <a href="#inicio">Início</a>
+    <a href="#categorias">Categorias</a>
+    <a href="#anuncie">Anúncio</a>
+    <a href="#perfil">Perfil</a>
+  </nav>
 </body>
 </html>
 ```
