@@ -1,139 +1,220 @@
 ```html
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Xxxporn</title>
+  <title>Xxxporn - Layout</title>
   <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       background-color: #000;
       color: #fff;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    header {
-      background-color: #111;
-      padding: 15px;
+
+    /* Cabeçalho topo */
+    .header {
       display: flex;
       justify-content: space-between;
+      padding: 10px 15px;
+      background: #000;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
       align-items: center;
     }
-    .search {
-      flex-grow: 1;
-      margin: 0 10px;
-    }
-    .search input {
-      width: 100%;
-      padding: 5px;
-      border-radius: 5px;
+    .header button {
+      background: none;
       border: none;
+      cursor: pointer;
+      padding: 5px;
     }
-    nav.bottom {
-      background-color: #222;
+    .header button img {
+      filter: invert(100%);
+    }
+
+    /* Barra lateral direita */
+    .sidebar-right {
       position: fixed;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-    }
-    nav.bottom a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-    }
-    .content {
-      padding: 20px;
-      padding-bottom: 70px;
-    }
-    iframe {
-      width: 100%;
-      height: 300px;
-      margin-top: 20px;
-border: none;
-    }
-    .video-container {
-      position: relative;
-      margin-bottom: 50px;
-    }
-    .side-buttons {
-      position: absolute;
       right: 10px;
-      top: 20px;
+      top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 10;
+    }
+    .sidebar-right button {
+      background: none;
+[04/06, 05:37] Ia: border: none;
+      cursor: pointer;
+      position: relative;
+      padding: 5px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      color: #fff;
     }
-    .side-buttons div {
-      text-align: center;
-      font-size: 14px;
+    .sidebar-right button img {
+      filter: invert(100%);
+      width: 32px;
+      height: 32px;
     }
-    .side-buttons img {
-      width: 40px;
-      height: 40px;
+    .sidebar-right .follow {
+      position: relative;
+    }
+    .sidebar-right .follow .plus {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: #ff2a68;
       border-radius: 50%;
-      border: 2px solid white;
+      width: 18px;
+      height: 18px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 18px;
+      text-align: center;
+      cursor: pointer;
     }
-    .side-buttons button {
+
+    /* Rodapé */
+    .footer {
+      background: #000;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid #222;
+      z-index: 10;
+    }
+    .footer button {
       background: none;
       border: none;
-      color: white;
-      font-size: 20px;
+      cursor: pointer;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10px;
+      gap: 2px;
+      padding: 4px 6px;
+      transition: color 0.3s;
+    }
+    .footer button img {
+[04/06, 05:37] Ia: filter: invert(100%);
+      width: 24px;
+      height: 24px;
+    }
+    .footer button.live img {
+      width: 36px;
+      height: 36px;
+      filter: none; /* Usar cor vermelha da imagem */
+    }
+    .footer button.live {
+      color: #ff2a68;
+    }
+    .footer button.active {
+      color: #ff2a68;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div><strong>Xxxporn</strong></div>
-    <div class="search">
-      <input type="text" placeholder="Pesquisar...">
+
+  <!-- Cabeçalho topo -->
+  <header class="header">
+    <div class="left">
+      <button id="search-btn" aria-label="Pesquisar">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/search.png" alt="Pesquisar" width="26" height="26"/>
+      </button>
     </div>
-    <div><a href="#perfil" style="color:#fff;">👤</a></div>
+    <div class="right">
+      <button id="profile-btn" aria-label="Perfil">
+        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/male-user.png" alt="Perfil" width="26" height="26"/>
+      </button>
+    </div>
   </header>
 
-  <div class="content" id="inicio">
-    <h2>Vídeos em destaque</h2>
-
-    <div class="video-container">
-      <iframe src="https://www.xvideos.com/embedframe/123456"></iframe>
-      <div class="side-buttons">
-        <div><img src="https://via.placeholder.com/40" alt="perfil"><br><button>➕</button></div>
-        <div><button>❤️</button></div>
-        <div><button>💾</button></div>
-        <div><button>💬</button></div>
-      </div>
-    </div>
-
-</div>
-
-  <div class="content" id="categorias">
-    <h2>Categorias</h2>
-    <ul>
-      <li>Hetero</li>
-      <li>Gay</li>
-      <li>Fetiches</li>
-      <li>Amador</li>
-    </ul>
+  <!-- Barra lateral direita -->
+  <div class="sidebar-right">
+    <button class="follow" aria-label="Seguir">
+      <img src="https://img.icons8.com/ios-glyphs/30/ffffff/male-user.png" alt="Seguir" width="26" height="26"/>
+      <span class="plus">+</span>
+    </button>
+    <button aria-label="Gostar">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/loading-heart.png" alt="Gostar" width="26" height="26"/>
+    </button>
+[04/06, 05:37] Ia: <button aria-label="Comentar">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/comments.png" alt="Comentar" width="26" height="26"/>
+    </button>
+    <button aria-label="Baixar vídeo">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/download.png" alt="Baixar vídeo" width="26" height="26"/>
+    </button>
+    <button aria-label="Denunciar">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/flag.png" alt="Denunciar" width="26" height="26"/>
+    </button>
   </div>
 
-  <div class="content" id="anuncie">
-    <h2>Anuncie aqui</h2>
-    <p>Entre em contato: <a href="https://wa.me/SEUNUMERO" style="color:#0f9;">WhatsApp</a></p>
-  </div>
+  <!-- Rodapé -->
+  <footer class="footer">
+    <button aria-label="Início">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Início" width="26" height="26"/>
+      <span>Início</span>
+    </button>
+    <button aria-label="Categorias">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/category.png" alt="Categorias" width="26" height="26"/>
+      <span>Categorias</span>
+    </button>
+    <button class="live" aria-label="Live">
+      <img src="https://img.icons8.com/?size=100&id=HAdDrhGGO64N&format=png&color=ff2a68" alt="Live" width="38" height="38"/>
+      <span>Live</span>
+    </button>
+    <button aria-label="Anúncios">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/ads.png" alt="Anúncios" width="26" height="26"/>
+[04/06, 05:37] Ia: <span>Anúncios</span>
+    </button>
+    <button aria-label="Notificações">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/alarm.png" alt="Notificações" width="26" height="26"/>
+      <span>Notificações</span>
+    </button>
+  </footer>
 
-  <div class="content" id="perfil">
-    <h2>Seu perfil</h2>
-    <p>Aqui pode colocar suas configurações futuramente.</p>
-  </div>
+  <script>
+    document.getElementById('search-btn').addEventListener('click', () => {
+      alert('Abrir campo de pesquisa');
+    });
 
-  <nav class="bottom">
-    <a href="#inicio">Início</a>
-    <a href="#categorias">Categorias</a>
-    <a href="#anuncie">Anúncio</a>
-    <a href="#perfil">Perfil</a>
-  </nav>
+    document.getElementById('profile-btn').addEventListener('click', () => {
+      alert('Abrir perfil do usuário');
+    });
+
+    document.querySelectorAll('footer button').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('footer button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        alert('Você clicou em: ' + button.getAttribute('aria-label'));
+      });
+    });
+
+    document.querySelectorAll('.sidebar-right button').forEach(button => {
+      button.addEventListener('click', () => {
+        alert('Você clicou em: ' + button.getAttribute('aria-label'));
+      });
+    });
+  </script>
 </body>
 </html>
 ```
