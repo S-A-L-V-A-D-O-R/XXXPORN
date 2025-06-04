@@ -1,717 +1,451 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>XXXPORN - Plataforma Adulto</title>
-<style>
-  /* Reset e base */
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    background:#000; color:#fff; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x:hidden;
-  }
-  /* Tela aviso maioridade */
-[04/06, 09:09] Ia: #ageCheck {
-    position:fixed; top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.95);
-    display:flex; flex-direction:column; justify-content:center; align-items:center;
-    z-index:9999;
-    font-size:1.3rem;
-  }
-  #ageCheck button {
-    margin: 12px;
-    padding: 16px 36px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 8px;
-    border:none;
-    cursor:pointer;
-    transition: background-color 0.3s;
-  }
-  #btnYes {
-    background:#0f0; color:#000;
-  }
-  #btnYes:hover {
-    background:#0c0;
-  }
-  #btnNo {
-    background:#f00; color:#fff;
-  }
-  #btnNo:hover {
-    background:#c00;
-  }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XXXPORN - Plataforma Adulto</title>
+    <style>
+        /* Reset e base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  /* Header topo */
-  header {
-    position: fixed;
-    top: 0; left:0; right:0;
-    height: 50px;
-    background:#111;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding: 0 15px;
-    border-bottom: 1px solid #222;
-    z-index: 1000;
-  }
-  header .left, header .right {
-    display:flex;
-    align-items:center;
-    gap: 20px;
-  }
-  header button {
-    background:none;
-    border:none;
-    color:#fff;
-    font-size: 28px;
-    cursor:pointer;
-    user-select:none;
-  }
-  header button:focus {
-    outline:none;
-  }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
 
-  /* Main conteúdo */
-  main {
-    margin-top: 60px;
-    max-width: 720px;
-    margin-left: auto;
-[04/06, 09:09] Ia: margin-right: auto;
-    padding: 10px 15px 80px;
-  }
+        /* Tela aviso maioridade */
+        #ageCheck {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
 
-  /* Vídeo container */
-  #videoPlayer {
-    position: relative;
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #000;
-  }
-  video {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+        .age-box {
+            text-align: center;
+        }
 
-  /* Controles do vídeo - aparecem só no hover */
-  #videoControls {
-    position: absolute;
-    bottom: 12px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    padding: 6px 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  #videoPlayer:hover #videoControls {
-    opacity: 1;
-  }
-  #videoControls button {
-    background:none;
-    border:none;
-    color:#fff;
-    font-size: 26px;
-    cursor:pointer;
-    user-select:none;
-  }
-  #videoControls button:focus {
-    outline:none;
-  }
+        .age-box p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
 
-  /* Navegação inferior */
-  nav#bottomNav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #111;
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid #222;
-    padding: 10px 0 12px;
-    z-index: 1000;
-  }
-  nav#bottomNav button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 28px;
-    cursor: pointer;
-[04/06, 09:10] Ia: display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    user-select:none;
-    transition: color 0.3s;
-  }
-  nav#bottomNav button.active {
-    color: #f00;
-  }
+        .age-box button {
+            margin: 10px;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-  /* Botões laterais direita */
-  #sideButtons {
-    position: fixed;
-    right: 10px;
-    top: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 999;
-  }
-  #sideButtons button {
-    background:none;
-    border:none;
-    color:#fff;
-    font-size: 28px;
-    cursor:pointer;
-    user-select:none;
-  }
-  #sideButtons button:focus {
-    outline:none;
-  }
+        /* Header topo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid #222;
+            z-index: 1000;
+        }
 
-  /* Categoria */
-  #categoryContent {
-    margin-top: 20px;
-  }
-  #categoryContent h2 {
-    margin-bottom: 12px;
-    font-size: 1.5rem;
-  }
-  #categoryList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  #categoryList button {
-    background: #222;
-    border: none;
-    padding: 8px 14px;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  #categoryList button:hover {
-    background: #444;
-  }
+        header .left,
+        header .right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
-  /* Perfil */
-  #profileContent {
-    margin-top: 20px;
-    background: #111;
-    padding: 15px 20px;
-    border-radius: 12px;
-  }
-  #profileContent h2 {
-    font-size: 1.7rem;
-    margin-bottom: 16px;
-  }
-  #profileContent p {
-[04/06, 09:10] Ia: font-size: 1.1rem;
-    margin-bottom: 8px;
-  }
-  #profileContent button {
-    margin-top: 10px;
-    padding: 10px 18px;
-    font-size: 1rem;
-    font-weight: 700;
-    background: #f00;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    user-select:none;
-    transition: background-color 0.3s;
-  }
-  #profileContent button:hover {
-    background: #c00;
-  }
+        header button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            user-select: none;
+        }
 
-</style>
+        header button:focus {
+            outline: none;
+        }
+
+        /* Main conteúdo */
+        main {
+            margin-top: 60px;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 15px 80px;
+        }
+
+        /* Vídeo container */
+        #videoPlayer {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Controles do vídeo - aparecem só no hover */
+        #videoControls {
+            position: absolute;
+            bottom: 12px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 6px 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #videoPlayer:hover #videoControls {
+            opacity: 1;
+        }
+
+        #videoControls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 26px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #videoControls button:focus {
+            outline: none;
+        }
+
+        /* Navegação inferior */
+        nav#bottomNav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #222;
+            padding: 10px 0 12px;
+            z-index: 1000;
+        }
+
+        nav#bottomNav button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            user-select: none;
+            transition: color 0.3s;
+        }
+
+        nav#bottomNav button.active {
+            color: #f00;
+        }
+
+        /* Botões laterais direita */
+        #sideButtons {
+            position: fixed;
+            right: 10px;
+            top: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 999;
+        }
+
+        #sideButtons button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #sideButtons button:focus {
+            outline: none;
+        }
+
+        /* Categoria */
+        #categoryContent {
+            margin-top: 20px;
+        }
+
+        #categoryContent h2 {
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        #categoryList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        #categoryList button {
+            background: #222;
+            border: none;
+            padding: 8px 14px;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #categoryList button:hover {
+            background: #444;
+        }
+
+        /* Perfil */
+        #profileContent {
+            margin-top: 20px;
+            background: #111;
+            padding: 15px 20px;
+            border-radius: 12px;
+        }
+
+        #profileContent h2 {
+            font-size: 1.7rem;
+            margin-bottom: 16px;
+        }
+
+        #profileContent p {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        #profileContent button {
+            margin-top: 10px;
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            background: #f00;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        #profileContent button:hover {
+            background: #c00;
+        }
+    </style>
 </head>
-```html
-<script>
-  document.getElementById('btnYes').onclick = function () {
-    document.getElementById('ageCheck').style.display = 'none';
-  }
 
-  document.getElementById('btnNo').onclick = function () {
-    alert('Você precisa ser maior de 18 anos para acessar este site.');
-    window.location.href = 'https://www.google.com';
-  }
-</script>
-```
-<body>
-```html
-<div id="ageCheck">
-  <div class="age-box">
-    <p>Você tem mais de 18 anos?</p>
-    <button id="btnYes">Sim</button>
-    <button id="btnNo">Não</button>
-  </div>
-</div>
-```
-<!-- Aviso maioridade -->
-<div id="ageCheck" role="dialog" aria-modal="true" aria-labelledby="ageCheckTitle">
-  <h2 id="ageCheckTitle">Você é maior de 18 anos?</h2>
-  <div>
-    <button id="btnYes" aria-label="Sim, sou maior de idade">Sim</button>
-    <button id="btnNo" aria-label="Não, não sou maior de idade">Não</button>
-  </div>
-</div>
-
-<header role="banner" aria-label="Cabeçalho do site">
-  <div class="left">
-    <button id="searchBtn" title="Pesquisar" aria-label="Pesquisar">🔍</button>
-  </div>
-  <div class="right">
-    <button id="profileBtn" title="Perfil" aria-label="Ir para Perfil">👤</button>
-  </div>
-</header>
-
-<main role="main" tabindex="-1">
-  <!-- Video Player -->
-  <section id="videoPlayer" aria-label="Player de vídeo">
-[04/06, 09:10] Ia: <video id="mainVideo" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" preload="metadata" playsinline muted autoplay loop></video>
-    <div id="videoControls" aria-label="Controles do vídeo">
-      <button id="btnBackward" title="Voltar 10 segundos" aria-label="Voltar 10 segundos">⏪</button>
-      <button id="btnPlayPause" title="Play/Pause" aria-label="Play/Pause">⏯️</button>
-      <button id="btnForward" title="Avançar 10 segundos" aria-label="Avançar 10 segundos">⏩</button>
-      <button id="btnMute" title="Mudo" aria-label="Alternar som">🔈</button>
-      <button id="btnFullscreen" title="Tela cheia" aria-label="Tela cheia">⛶</button>
-    </div>
-  </section>
-
-  <!-- Categorias -->
-  <section id="categoryContent" style="display:none;" aria-label="Categorias">
-    <h2>Categorias</h2>
-    <div id="categoryList">
-      <button data-cat="fetish">Fetish</button>
-      <button data-cat="amateur">Amateur</
-
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>XXXPORN - Plataforma Adulto</title>
-<style>```css
-#ageCheck {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.age-box {
-  text-align: center;
-}
-
-.age-box p {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-.age-box button {
-  margin: 10px;
-  padding: 10px 25px;
-  font-size: 16px;
-  cursor: pointer;
-}
-```
-  /* Reset e base */
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    background:#000; color:#fff; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x:hidden;
-  }
-  /* Tela aviso maioridade */
-  #ageCheck {
-    position:fixed; top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.95);
-    display:flex; flex-direction:column; justify-content:center; align-items:center;
-    z-index:9999;
-    font-size:1.3rem;
-  }
-  #ageCheck button {
-    margin: 12px;
-    padding: 16px 36px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 8px;
-    border:none;
-    cursor:pointer;
-    transition: background-color 0.3s;
-  }
-  #btnYes {
-    background:#0f0; color:#000;
-  }
-  #btnYes:hover {
-    background:#0c0;
-  }
-  #btnNo {
-    background:#f00; color:#fff;
-  }
-  #btnNo:hover {
-    background:#c00;
-  }
-
-  /* Header topo */
-  header {
-    position: fixed;
-[04/06, 09:12] Ia: top: 0; left:0; right:0;
-    height: 50px;
-    background:#111;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding: 0 15px;
-    border-bottom: 1px solid #222;
-    z-index: 1000;
-  }
-  header .left, header .right {
-    display:flex;
-    align-items:center;
-    gap: 20px;
-  }
-  header button {
-    background:none;
-    border:none;
-    color:#fff;
-    font-size: 28px;
-    cursor:pointer;
-    user-select:none;
-  }
-  header button:focus {
-    outline:none;
-  }
-
-  /* Main conteúdo */
-  main {
-    margin-top: 60px;
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px 15px 80px;
-  }
-
-  /* Vídeo container */
-  #videoPlayer {
-    position: relative;
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #000;
-  }
-  video {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Controles do vídeo - aparecem só no hover */
-  #videoControls {
-    position: absolute;
-    bottom: 12px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    padding: 6px 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  #videoPlayer:hover #videoControls {
-    opacity: 1;
-  }
-[04/06, 09:12] Ia: #videoControls button {
-    background:none;
-    border:none;
-    color:#fff;
-    font-size: 26px;
-    cursor:pointer;
-    user-select:none;
-  }
-  #videoControls button:focus {
-    outline:none;
-  }
-
-  /* Navegação inferior */
-  nav#bottomNav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #111;
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid #222;
-    padding: 10px 0 12px;
-    z-index: 1000;
-  }
-  nav#bottomNav button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 28px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    user-select:none;
-    transition: color 0.3s;
-  }
-  nav#bottomNav button.active {
-    color: #f00;
-  }
-
-  /* Botões laterais direita */
-  #sideButtons {
-    position: fixed;
-    right: 10px;
-    top: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 999;
-  }
-  #sideButtons button {
-    background:none;
-    border:none;
-    color:#fff;
-    font-size: 28px;
-    cursor:pointer;
-    user-select:none;
-  }
-  #sideButtons button:focus {
-    outline:none;
-  }
-
-  /* Categoria */
-  #categoryContent {
-    margin-top: 20px;
-  }
-  #categoryContent h2 {
-    margin-bottom: 12px;
-    font-size: 1.5rem;
-  }
-[04/06, 09:12] Ia: #categoryList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  #categoryList button {
-    background: #222;
-    border: none;
-    padding: 8px 14px;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  #categoryList button:hover {
-    background: #444;
-  }
-
-  /* Perfil */
-  #profileContent {
-    margin-top: 20px;
-    background: #111;
-    padding: 15px 20px;
-    border-radius: 12px;
-  }
-  #profileContent h2 {
-    font-size: 1.7rem;
-    margin-bottom: 16px;
-  }
-  #profileContent p {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-  }
-  #profileContent button {
-    margin-top: 10px;
-    padding: 10px 18px;
-    font-size: 1rem;
-    font-weight: 700;
-    background: #f00;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    user-select:none;
-    transition: background-color 0.3s;
-  }
-  #profileContent button:hover {
-    background: #c00;
-  }
-</style>
-</head>
 <body>
 
-<!-- Aviso maioridade -->
-<div id="ageCheck" role="dialog" aria-modal="true" aria-labelledby="ageCheckTitle">
-  <h2 id="ageCheckTitle">Você é maior de 18 anos?</h2>
-  <div>
-    <button id="btnYes" aria-label="Sim, sou maior de idade">Sim</button>
-[04/06, 09:12] Ia: <button id="btnNo" aria-label="Não, não sou maior de idade">Não</button>
-  </div>
-</div>
-
-<header role="banner" aria-label="Cabeçalho do site">
-  <div class="left">
-    <button id="searchBtn" title="Pesquisar" aria-label="Pesquisar">🔍</button>
-  </div>
-  <div class="right">
-    <button id="profileBtn" title="Perfil" aria-label="Ir para Perfil">👤</button>
-  </div>
-</header>
-
-<main role="main" tabindex="-1">
-  <!-- Video Player -->
-  <section id="videoPlayer" aria-label="Player de vídeo">
-    <video id="mainVideo" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" preload="metadata" playsinline muted autoplay loop></video>
-    <div id="videoControls" aria-label="Controles do vídeo">
-      <button id="btnBackward" title="Voltar 10 segundos" aria-label="Voltar 10 segundos">⏪</button>
-      <button id="btnPlayPause" title="Play/Pause" aria-label="Play/Pause">⏯️</button>
-      <button id="btnForward" title="Avançar 10 segundos" aria-label="Avançar 10 segundos">⏩</button>
-      <button id="btnMute" title="Mudo" aria-label="Alternar som">🔈</button>
-      <button id="btnFullscreen" title="Tela cheia" aria-label="Tela cheia">⛶</button>
+    <!-- Aviso maioridade -->
+    <div id="ageCheck" role="dialog" aria-modal="true" aria-labelledby="ageCheckTitle">
+        <h2 id="ageCheckTitle">Você é maior de 18 anos?</h2>
+        <div class="age-box">
+            <button id="btnYes" aria-label="Sim, sou maior de idade">Sim</button>
+            <button id="btnNo" aria-label="Não, não sou maior de idade">Não</button>
+        </div>
     </div>
-  </section>
 
-  <!-- Categorias -->
-[04/06, 09:12] Ia: <section id="categoryContent" style="display:none;" aria-label="Categorias">
-    <h2>Categorias</h2>
-    <div id="categoryList">
-      <button data-cat="fetish">Fetish</button>
-      <button data-cat="amateur">Amateur</button>
-      <button data-cat="anal">Anal</button>
-      <button data-cat="teen">Teen</button>
-      <button data-cat="lesbian">Lesbian</button>
+    <!-- Header -->
+    <header role="banner" aria-label="Cabeçalho do site">
+        <div class="left">
+            <button id="searchBtn" title="Pesquisar" aria-label="Pesquisar">🔍</button>
+        </div>
+        <div class="right">
+            <button id="profileBtn" title="Perfil" aria-label="Ir para Perfil">👤</button>
+        </div>
+    </header>
+
+    <!-- Main conteúdo -->
+    <main role="main" tabindex="-1">
+        <!-- Video Player -->
+        <section id="videoPlayer" aria-label="Player de vídeo">
+            <video id="mainVideo" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" preload="metadata" playsinline muted autoplay loop></video>
+            <div id="videoControls" aria-label="Controles do vídeo">
+                <button id="btnBackward" title="Voltar 10 segundos" aria-label="Voltar 10 segundos">⏪</button>
+                <button id="btnPlayPause" title="Play/Pause" aria-label="Play/Pause">⏯️</button>
+                <button id="btnForward" title="Avançar 10 segundos" aria-label="Avançar 10 segundos">⏩</button>
+                <button id="btnMute" title="Mudo" aria-label="Alternar som">🔈</button>
+                <button id="btnFullscreen" title="Tela cheia" aria-label="Tela cheia">⛶</button>
+            </div>
+        </section>
+
+        <!-- Categorias -->
+        <section id="categoryContent" style="display:none;" aria-label="Categorias">
+            <h2>Categorias</h2>
+            <div id="categoryList">
+                <button data-cat="fetish">Fetish</button>
+                <button data-cat="amateur">Amateur</button>
+                <button data-cat="anal">Anal</button>
+                <button data-cat="teen">Teen</button>
+                <button data-cat="lesbian
+                <button data-cat="lesbian">Lesbian</button>
+                <button data-cat="couples">Couples</button>
+            </div>
+        </section>
+
+        <!-- Perfil -->
+        <section id="profileContent" style="display:none;" aria-label="Perfil do usuário">
+            <h2>Perfil do Usuário</h2>
+            <p id="username">Nome do Usuário: João Doe</p>
+            <p id="email">Email: joao.doe@email.com</p>
+            <button id="logoutBtn" title="Sair" aria-label="Sair">Sair</button>
+        </section>
+
+    </main>
+
+    <!-- Navegação inferior -->
+    <nav id="bottomNav" aria-label="Navegação inferior">
+        <button id="homeBtn" aria-label="Ir para a Página Inicial" class="active">
+            <span>🏠</span><span>Home</span>
+        </button>
+        <button id="categoryNavBtn" aria-label="Ir para Categorias">
+            <span>📂</span><span>Categorias</span>
+        </button>
+        <button id="profileNavBtn" aria-label="Ir para o Perfil">
+            <span>👤</span><span>Perfil</span>
+        </button>
+    </nav>
+
+    <!-- Botões laterais (exemplo de interação) -->
+    <div id="sideButtons">
+        <button id="likeBtn" aria-label="Curtir vídeo">
+            👍
+        </button>
+        <button id="dislikeBtn" aria-label="Descurtir vídeo">
+            👎
+        </button>
     </div>
-  </section>
 
-  <!-- Área perfil -->
-  <section id="profileContent" style="display:none;" aria-label="Perfil do usuário">
-    <h2>Perfil</h2>
-    <p><strong>Usuário:</strong>
+    <script>
+        // Controle de visibilidade do aviso de maioridade
+        const ageCheck = document.getElementById('ageCheck');
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
 
-```html
-    João Salvador</p>
-    <p><strong>Tipo:</strong> Produtor</p>
-    <p><strong>Ganhos:</strong> $250.00</p>
-    <button id="btnEditProfile">Editar Perfil</button>
-    <button id="btnUploadVideo">Postar Vídeo</button>
-    <button id="btnViewStats">Ver Estatísticas</button>
-  </section>
-</main>
+        btnYes.addEventListener('click', () => {
+            ageCheck.style.display = 'none';
+        });
 
-<!-- Navegação inferior -->
-<nav id="bottomNav">
-  <button id="navHome" class="active" title="Início">🏠</button>
-  <button id="navCategories" title="Categorias">📂</button>
-  <button id="navLive" title="Live">🔴</button>
-  <button id="navAds" title="Anúncios">📢</button>
-  <button id="navNotifications" title="Notificações">🔔</button>
-</nav>
+        btnNo.addEventListener('click', () => {
+            window.location.href = 'https://www.google.com'; // Redireciona para outro site
+        });
 
-<!-- Botões laterais -->
-<div id="sideButtons">
-  <button title="Seguir">➕👤</button>
-  <button title="Curtir">❤️</button>
-  <button title="Comentar">💬</button>
-  <button title="Baixar">⬇️</button>
-  <button title="Denunciar">🚩</button>
-</div>
+        // Funções para controle de vídeo
+        const video = document.getElementById('mainVideo');
+        const btnPlayPause = document.getElementById('btnPlayPause');
+        const btnBackward = document.getElementById('btnBackward');
+        const btnForward = document.getElementById('btnForward');
+        const btnMute = document.getElementById('btnMute');
+        const btnFullscreen = document.getElementById('btnFullscreen');
+        
+        btnPlayPause.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                btnPlayPause.innerHTML = '⏸️';
+            } else {
+                video.pause();
+                btnPlayPause.innerHTML = '⏯️';
+            }
+        });
 
-<script>
-  // Controle de idade
-  const ageCheck = document.getElementById('ageCheck');
-  document.getElementById('btnYes').onclick = () => {
-    ageCheck.style.display = 'none';
-  };
-  document.getElementById('btnNo').onclick = () => {
-    alert('Você precisa ser maior de idade para acessar este site.');
-[04/06, 14:43] Ia: window.location.href = 'https://google.com';
-  };
+        btnBackward.addEventListener('click', () => {
+            video.currentTime -= 10;
+        });
 
-  // Alternar conteúdo
-  const categoryContent = document.getElementById('categoryContent');
-  const profileContent = document.getElementById('profileContent');
-  const mainVideo = document.getElementById('mainVideo');
+        btnForward.addEventListener('click', () => {
+            video.currentTime += 10;
+        });
 
-  document.getElementById('navHome').onclick = () => {
-    categoryContent.style.display = 'none';
-    profileContent.style.display = 'none';
-  };
-  document.getElementById('navCategories').onclick = () => {
-    categoryContent.style.display = 'block';
-    profileContent.style.display = 'none';
-  };
-  document.getElementById('profileBtn').onclick = () => {
-    categoryContent.style.display = 'none';
-    profileContent.style.display = 'block';
-  };
+        btnMute.addEventListener('click', () => {
+            video.muted = !video.muted;
+            btnMute.innerHTML = video.muted ? '🔇' : '🔈';
+        });
 
-  // Controles do vídeo
-  const btnPlayPause = document.getElementById('btnPlayPause');
-  const btnForward = document.getElementById('btnForward');
-  const btnBackward = document.getElementById('btnBackward');
-  const btnMute = document.getElementById('btnMute');
-  const btnFullscreen = document.getElementById('btnFullscreen');
+        btnFullscreen.addEventListener('click', () => {
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.mozRequestFullScreen) { // Firefox
+                video.mozRequestFullScreen();
+            } else if (video.webkitRequestFullscreen) { // Chrome and Safari
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) { // IE/Edge
+                video.msRequestFullscreen();
+            }
+        });
 
-  btnPlayPause.onclick = () => {
-    if (mainVideo.paused) {
-      mainVideo.play();
-    } else {
-      mainVideo.pause();
-    }
-  };
+        // Controle de navegação inferior
+        const homeBtn = document.getElementById('homeBtn');
+        const categoryNavBtn = document.getElementById('categoryNavBtn');
+        const profileNavBtn = document.getElementById('profileNavBtn');
 
-  btnForward.onclick = () => {
-    mainVideo.currentTime += 10;
-  };
+        homeBtn.addEventListener('click', () => {
+            homeBtn.classList.add('active');
+            categoryNavBtn.classList.remove('active');
+            profileNavBtn.classList.remove('active');
+            document.getElementById('categoryContent').style.display = 'none';
+            document.getElementById('profileContent').style.display = 'none';
+        });
 
-  btnBackward.onclick = () => {
-[04/06, 14:43] Ia: mainVideo.currentTime -= 10;
-  };
+        categoryNavBtn.addEventListener('click', () => {
+            homeBtn.classList.remove('active');
+            categoryNavBtn.classList.add('active');
+            profileNavBtn.classList.remove('active');
+            document.getElementById('categoryContent').style.display = 'block';
+            document.getElementById('profileContent').style.display = 'none';
+        });
 
-  btnMute.onclick = () => {
-    mainVideo.muted = !mainVideo.muted;
-    btnMute.textContent = mainVideo.muted ? '🔇' : '🔈';
-  };
+        profileNavBtn.addEventListener('click', () => {
+            homeBtn.classList.remove('active');
+            categoryNavBtn.classList.remove('active');
+            profileNavBtn.classList.add('active');
+            document.getElementById('categoryContent').style.display = 'none';
+            document.getElementById('profileContent').style.display = 'block';
+        });
 
-  btnFullscreen.onclick = () => {
-    if (mainVideo.requestFullscreen) {
-      mainVideo.requestFullscreen();
-    }
-  };
-
-  // Avançar com toque na tela
-  mainVideo.onclick = () => {
-    mainVideo.currentTime += 10;
-  };
-</script>
+        // Função para simular o logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.addEventListener('click', () => {
+            alert('Você saiu!');
+            document.getElementById('profileContent').style.display = 'none';
+            homeBtn.classList.add('active');
+        });
+    </script>
 
 </body>
+
 </html>
-```
