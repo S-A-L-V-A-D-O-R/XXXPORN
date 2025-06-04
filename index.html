@@ -1,709 +1,391 @@
+  
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Xxxporn - Plataforma</title>
+<title>Xxxporn - Maioridade e Layout</title>
 <style>
-  /* Reset básico */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box; 
-  }
-  body {
-    background: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
+  /* Reset e base */
+  body, html {
+    margin:0; padding:0; height:100%; background:#000; color:#fff; font-family: Arial, sans-serif;
     overflow-x: hidden;
   }
-  /* Header topo */
+  a, button {
+    cursor: pointer;
+    color: #fff;
+    background: none;
+    border: none;
+    font-size: 24px;
+  }
+  /* Modal Maioridade */
+  #modalMaioridade {
+    position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95);
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column; text-align: center; padding: 20px;
+    z-index: 9999;
+  }
+  #modalMaioridade p {
+    font-size: 1.5rem; margin-bottom: 30px;
+  }
+  #modalMaioridade button {
+    font-size: 1.3rem; padding: 12px 30px; margin: 0 15px;
+[04/06, 08:50] Ia: background-color: #ff0044; border-color: #ff0044;
+  }
+  /* Layout Header */
   header {
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-[04/06, 08:26] Ia: background: #111;
+    position: fixed; top:0; left:0; width:100%; height: 50px;
+    background: #111; border-bottom: 1px solid #222;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 15px; z-index: 500;
   }
   header button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 30px;
-    height: 30px;
+    font-size: 26px;
   }
-  /* Ícones topo */
-  header button svg {
-    width: 24px;
-    height: 24px;
+  /* Container Principal */
+  #main {
+    margin-top: 50px; /* abaixo do header */
+    display: flex; height: calc(100vh - 50px);
+  }
+  /* Sidebar esquerda - Menu */
+  #sidebar-left {
+    width: 60px; background: #111; border-right: 1px solid #222;
+    display: flex; flex-direction: column; align-items: center; padding-top: 15px;
+    gap: 30px;
+  }
+  #sidebar-left button {
+    font-size: 28px;
+    color: #fff;
+  }
+  #sidebar-left button.live {
+    color: #ff0044;
+    font-size: 34px;
+  }
+  /* Sidebar direita - ações no vídeo */
+  #sidebar-right {
+    width: 60px; background: #111; border-left: 1px solid #222;
+    display: flex; flex-direction: column; align-items: center; padding-top: 15px;
+    gap: 25px;
+  }
+  #sidebar-right button {
+    font-size: 28px;
+    color: #fff;
+    position: relative;
+  }
+  #sidebar-right button span.badge {
+    position: absolute;
+    top: -8px; right: -8px;
+    background: #ff0044; color: #fff;
+[04/06, 08:50] Ia: border-radius: 6px;
+    border: 2px solid #fff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  #modalMaioridade button:hover {
+    background-color: #ff0044;
+    border-color: #ff0044;
   }
 
-  /* Vídeo central */
-  #video-player {
+  /* Header topo */
+  .header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background: #111;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #222;
+    align-items: center;
+    z-index: 100;
+  }
+  .header button {
+    font-size: 28px;
+    color: white;
+    background: none;
+    border: none;
+  }
+
+  /* Vídeo container */
+  #video-container {
     position: relative;
     width: 100%;
-    max-width: 600px;
-    margin: 15px auto;
-    border-radius: 8px;
-    overflow: hidden;
+    max-width: 720px;
+    margin: 70px auto 120px; /* espaço topo e rodapé */
   }
   video {
     width: 100%;
-    border-radius: 8px;
-    background: #222;
-  }
-  /* Controles invisíveis para avançar/voltar ao toque */
-  #video-player .touch-area {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 50%;
-    cursor: pointer;
-    z-index: 10;
-  }
-  #video-player .touch-left {
-    left: 0;
-  }
-  #video-player .touch-right {
-    right: 0;
-  }
-  /* Botões volume e fullscreen visíveis */
-  #video-controls {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    display: flex;
-    gap: 10px;
-  }
-  #video-controls button {
-    background: rgba(255 255 255 / 0.2);
-    border: none;
-    border-radius: 4px;
-    padding: 5px;
-    cursor: pointer;
-    filter: invert(1);
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #video-controls button svg {
-    width: 20px;
-[04/06, 08:26] Ia: height: 20px;
+    border-radius: 10px;
+    background: #111;
   }
 
-  /* Barra inferior de navegação (botões grandes estilo TikTok) */
-  nav.bottom-nav {
+  /* Barra inferior */
+  .footer {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0; left: 0; width: 100%;
     background: #111;
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    height: 60px;
-    border-top: 1px solid #333;
+    padding: 10px 0;
+    border-top: 1px solid #222;
+    z-index: 100;
   }
-  nav.bottom-nav button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
+  .footer button {
+    font-size: 28px;
+    color: white;
   }
-  nav.bottom-nav button.live-btn {
-    filter: none;
-    width: 50px;
-    height: 50px;
-  }
-  nav.bottom-nav button.live-btn img {
-    width: 50px;
-    height: 50px;
-  }
-  nav.bottom-nav button:hover {
-    transform: scale(1.2);
+  .footer button.live {
+    color: #ff0044;
+    font-size: 34px;
   }
 
-  /* Laterais direita com botões verticais */
-  .side-buttons-right {
+  /* Sidebar direita */
+  .sidebar {
     position: fixed;
-    top: 50%;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    transform: translateY(-50%);
+    top: 30%;
+    right: 15px;
+[04/06, 08:50] Ia: border-radius: 50%; font-size: 12px; padding: 2px 6px;
   }
-  .side-buttons-right button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* Conteúdo Central */
+  #content {
+    flex: 1; padding: 15px; overflow-y: auto;
+    display: flex; flex-direction: column; align-items: center;
+    background: #000;
   }
-[04/06, 08:26] Ia: .side-buttons-right button svg {
-    width: 28px;
-    height: 28px;
+  /* Video */
+  video {
+    max-width: 720px; width: 100%; border-radius: 12px; background: #111;
   }
-
-  /* Header topo direita (perfil) e esquerda (pesquisar) */
-  .top-left, .top-right {
-    display: flex;
-    align-items: center;
+  /* Botões básicos para video */
+  #video-controls {
+    margin-top: 10px; display: flex; justify-content: center; gap: 25px;
   }
-  .top-left button, .top-right button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 30px;
-    height: 30px;
-    margin: 0 6px;
+  #video-controls button {
+    font-size: 24px; color: #fff; border-radius: 6px;
+    padding: 8px 15px; border: 1.5px solid #fff;
+    transition: background 0.3s;
   }
-  .top-left button svg, .top-right button svg {
-    width: 24px;
-    height: 24px;
+  #video-controls button:hover {
+    background: #ff0044;
+    border-color: #ff0044;
   }
-
-  /* Perfil modal */
-  #profile-modal, #category-modal, #ad-modal, #live-modal {
+  /* Áreas de abas */1
+  .tab {
+    width: 100%; max-width: 720px;
     display: none;
-    position: fixed;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 400px;
-    max-height: 80vh;
-    overflow-y: auto;
-    background: #222;
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1000;
-    box-shadow: 0 0 10px #000;
+    color: #ddd;
   }
-  #profile-modal.active, #category-modal.active, #ad-modal.active, #live-modal.active {
+  .tab.active {
     display: block;
   }
-  #profile-modal h2, #category-modal h2, #ad-modal h2, #live-modal h2 {
+  h2 {
+    color: #ff0044;
     margin-bottom: 15px;
   }
-  #profile-modal button.close-btn, #category-modal button.close-btn, #ad-modal button.close-btn, #live-modal button.close-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-[04/06, 08:26] Ia: cursor: pointer;
-    float: right;
-  }
-
-  /* Botões dentro do perfil */
-  .profile-section {
-    margin-bottom: 20px;
-  }
-  .profile-section h3 {
-    margin-bottom: 8px;
-  }
-  .profile-info {
-    margin-bottom: 12px;
-  }
-  .profile-info label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-  .profile-info input, .profile-info select {
-    width: 100%;
-    padding: 6px;
-    border-radius: 4px;
-    border: none;
-    background: #333;
-    color: #fff;
-  }
-  .profile-info input[type="file"] {
-    padding: 3px;
-  }
-  button.action-btn {
-    background: #E60023;
-    border: none;
+  /* Formulário simples */
+  form input, form select, form button {
+    margin: 8px 0;
+    padding: 8px 12px;
     border-radius: 6px;
-    color: white;
-    padding: 10px 18px;
+    border: 1px solid #333;
+    width: 100%;
+    background: #222;
+    color: #fff;
+  }
+  form button {
+    border: none;
+    background: #ff0044;
     cursor: pointer;
     font-weight: bold;
-    width: 100%;
   }
-  button.action-btn:hover {
-    background: #B0001A;
+  form button:hover {
+[04/06, 08:50] Ia: background: #cc0033;
+  }
+</style>
+</head>
+<body>
+
+<!-- Modal Maioridade -->
+<div id="modalMaioridade">
+  <p>Você confirma que tem mais de 18 anos para acessar este conteúdo?</p>
+  <div>
+    <button id="btnMaiorSim">SIM</button>
+    <button id="btnMaiorNao">NÃO</button>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <button id="btnPesquisar" title="Pesquisar">&#128269;</button>
+  <button id="btnPerfil" title="Perfil">&#128100;</button>
+</header>
+
+<!-- Main -->
+<div id="main">
+
+  <!-- Sidebar esquerdo -->
+  <nav id="sidebar-left">
+    <button id="btnHome" title="Início">&#8962;</button>
+    <button id="btnCategorias" title="Categorias">&#128193;</button>
+    <button id="btnLive" title="Live" class="live">&#128249;</button>
+    <button id="btnAnuncios" title="Anúncios">&#128176;</button>
+  </nav>
+
+  <!-- Conteúdo central -->
+  <section id="content">
+    <!-- Abas -->
+    <div id="tabHome" class="tab active">
+      <h2>Início - Vídeos Infinitos</h2>
+      <video id="videoPlayer" src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+      <div id="video-controls">
+        <button id="btnPlayPause">▶️ / ⏸️</button>
+        <button id="btnMute">🔈/🔇</button>
+      </div>
+    </div>
+
+    <div id="tabCategorias" class="tab">
+      <h2>Categorias</h2>
+[04/06, 08:50] Ia: display: flex;
+    flex-direction: column;
+    gap: 22px;
+    z-index: 100;
+  }
+  .sidebar button {
+    font-size: 32px;
+    color: white;
+    background: none;
+    border: none;
+    outline: none;
   }
 
 </style>
 </head>
 <body>
 
-<!-- Header topo -->
-<header>
-  <div class="top-left">
-    <!-- Pesquisa -->
-    <button id="search-btn" aria-label="Pesquisar">
-      <svg fill="white" viewBox="0 0 24 24"><path d="M10 2a8 8 0 105.29 14.29l5.4 5.4 1.42-1.42-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
-    </button>
-  </div>
-  <div class="top-right">
-    <!-- Perfil -->
-    <button id="profile-btn" aria-label="Perfil">
-[04/06, 08:26] Ia: <svg fill="white" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-    </button>
-  </div>
-</header>
-
-<!-- Vídeo principal -->
-<div id="video-player">
-  <video id="main-video" controls muted autoplay loop playsinline>
-    <source src="https://cdn.p
-[04/06, 08:27] Ia:  
-
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Xxxporn - Plataforma</title>
-<style>
-  /* Reset básico */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box; 
-  }
-  body {
-    background: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-  }
-  /* Header topo */
-  header {
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-    background: #111;
-  }
-  header button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 30px;
-    height: 30px;
-  }
-  /* Ícones topo */
-  header button svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Vídeo central */
-  #video-player {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin: 15px auto;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  video {
-    width: 100%;
-    border-radius: 8px;
-    background: #222;
-  }
-  /* Controles invisíveis para avançar/voltar ao toque */
-  #video-player .touch-area {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 50%;
-    cursor: pointer;
-[04/06, 08:27] Ia: z-index: 10;
-  }
-  #video-player .touch-left {
-    left: 0;
-  }
-  #video-player .touch-right {
-    right: 0;
-  }
-  /* Botões volume e fullscreen visíveis */
-  #video-controls {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    display: flex;
-    gap: 10px;
-  }
-  #video-controls button {
-    background: rgba(255 255 255 / 0.2);
-    border: none;
-    border-radius: 4px;
-    padding: 5px;
-    cursor: pointer;
-    filter: invert(1);
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #video-controls button svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Barra inferior de navegação (botões estilo TikTok) */
-  nav.bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #111;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 60px;
-    border-top: 1px solid #333;
-  }
-  nav.bottom-nav button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
-  }
-  nav.bottom-nav button.live-btn {
-    filter: none;
-    width: 50px;
-    height: 50px;
-  }
-[04/06, 08:27] Ia: nav.bottom-nav button.live-btn img {
-    width: 50px;
-    height: 50px;
-  }
-  nav.bottom-nav button:hover {
-    transform: scale(1.2);
-  }
-
-  /* Laterais direita com botões verticais */
-  .side-buttons-right {
-    position: fixed;
-    top: 50%;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    transform: translateY(-50%);
-  }
-  .side-buttons-right button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .side-buttons-right button svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  /* Header topo direita (perfil) e esquerda (pesquisar) */
-  .top-left, .top-right {
-    display: flex;
-    align-items: center;
-  }
-  .top-left button, .top-right button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    filter: invert(1);
-    width: 30px;
-    height: 30px;
-    margin: 0 6px;
-  }
-  .top-left button svg, .top-right button svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Perfil modal */
-  #profile-modal, #category-modal, #ad-modal, #live-modal {
-    display: none;
-    position: fixed;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-[04/06, 08:28] Ia: max-width: 400px;
-    max-height: 80vh;
-    overflow-y: auto;
-    background: #222;
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1000;
-    box-shadow: 0 0 10px #000;
-  }
-  #profile-modal.active, #category-modal.active, #ad-modal.active, #live-modal.active {
-    display: block;
-  }
-  #profile-modal h2, #category-modal h2, #ad-modal h2, #live-modal h2 {
-    margin-bottom: 15px;
-  }
-  #profile-modal button.close-btn, #category-modal button.close-btn, #ad-modal button.close-btn, #live-modal button.close-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-    float: right;
-  }
-
-  /* Botões dentro do perfil */
-  .profile-section {
-    margin-bottom: 20px;
-  }
-  .profile-section h3 {
-    margin-bottom: 8px;
-  }
-  .profile-info {
-    margin-bottom: 12px;
-  }
-  .profile-info label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-  .profile-info input, .profile-info select {
-    width: 100%;
-    padding: 6px;
-    border-radius: 4px;
-    border: none;
-    background: #333;
-    color: #fff;
-  }
-  .profile-info input[type="file"] {
-    padding: 3px;
-  }
-  button.action-btn {
-    background: #E60023;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    padding: 10px 18px;
-[04/06, 08:28] Ia: cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-  }
-  button.action-btn:hover {
-    background: #B0001A;
-  }
-
-</style>
-</head>
-<body>
-
-<!-- Header topo -->
-<header>
-  <div class="top-left">
-    <!-- Pesquisa -->
-    <button id="search-btn" aria-label="Pesquisar">
-      <svg fill="white" viewBox="0 0 24 24"><path d="M10 2a8 8 0 105.29 14.29l5.4 5.4 1.42-1.42-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
-    </button>
-  </div>
-  <div class="top-right">
-    <!-- Perfil -->
-    <button id="profile-btn" aria-label="Perfil">
-      <svg fill="white" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-    </button>
-  </div>
-</header>
-
-<!-- Vídeo principal -->
-<div id="video-player">
-  <video id="main-video" muted autoplay loop playsinline>
-    <source src="https://cdn.pornhub.phncdn.com/videos/videos_4/202302/24/204870001/original/(m=eaf8Ggaaa2a3)4aebc01f886dc03a2079e_1080p_1500.mp4" type="video/mp4" />
-    Seu navegador não suporta vídeo.
-  </video>
-  <div class="touch-area touch-left" title="Recuar 10 segundos"></div>
-  <div class="touch-area touch-right" title="Avançar 10 segundos"></div>
-  <div id="video-controls">
-    <button id="mute-btn" aria-label="Mudo">
-[04/06, 08:29] Ia: <svg fill="white" viewBox="0 0 24 24"><path d="M16.5 12a4.5 4.5 0 01-7.94 3.36L7 15H4v-6h3l4.56-3.79A4.5 4.5 0 0116.5 12zM18 12a6 6 0 00-1.65-4.24l1.41-1.41A8 8 0 0118 12z"/></svg>
-[04/06, 08:30] Ia:
-
-```html
-    </button>
-    <button id="fullscreen-btn" aria-label="Tela cheia">
-      <svg fill="white" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm10-4h2V5h-5v2h3v3zm-6 6h2v2h-2v-2zm-4-4h2v2H7v-2z"/></svg>
-    </button>
+<!-- Modal Maioridade -->
+<div id="modalMaioridade">
+  <p>Você confirma que tem mais de 18 anos para acessar este conteúdo?</p>
+  <div>
+    <button id="btnSim">SIM</button>
+    <button id="btnNao">NÃO</button>
   </div>
 </div>
 
-<!-- Navegação inferior estilo TikTok -->
-<nav class="bottom-nav">
-  <button id="home-btn" aria-label="Home">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-  </button>
-  <button id="search-bottom-btn" aria-label="Pesquisar">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M10 2a8 8 0 105.29 14.29l5.4 5.4 1.42-1.42-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
-  </button>
-  <button class="live-btn" id="live-btn" aria-label="Live">
-    <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" alt="Live" />
-  </button>
-  <button id="favorites-btn" aria-label="Favoritos">
-[04/06, 08:30] Ia: <svg fill="white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3a5.5 5.5 0 015.5 5.5c0-2.08 1.68-3.78 3.78-3.78A5.5 5.5 0 0122 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  </button>
-  <button id="profile-bottom-btn" aria-label="Perfil">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-  </button>
-</nav>
+<!-- Header topo -->
+<header class="header">
+  <button id="btnPesquisa" aria-label="Pesquisar">&#128269;</button> <!-- lupa -->
+  <button id="btnPerfil" aria-label="Perfil">&#128100;</button> <!-- perfil usuário -->
+</header>
 
-<!-- Botões laterais direita -->
-<div class="side-buttons-right">
-  <button id="like-btn" aria-label="Curtir">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3a5.5 5.5 0 015.5 5.5c0-2.08 1.68-3.78 3.78-3.78A5.5 5.5 0 0122 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  </button>
-  <button id="comment-btn" aria-label="Comentar">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M21 6h-2v9H5v2h14l4 4V6z"/></svg>
-  </button>
-  <button id="share-btn" aria-label="Compartilhar">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.27 3.27 0 000-1.41l7.05-4.11a2.99 2.99 0 10-.91-1.82L7.78 9.34a3.01 3.01 0 10-.04 5.32l7.12 4.15c.53.45 1.22.74 2.04.74a3 3 0 100-6z"/></svg>
-  </button>
+<!-- Vídeo principal -->
+<div id="video-container">
+  <video id="videoPlayer" src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
 </div>
-[04/06, 08:30] Ia: <!-- Modal Perfil -->
-<div id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
-  <button class="close-btn" aria-label="Fechar perfil">&times;</button>
-  <h2 id="profile-title">Perfil do Usuário</h2>
-  <div class="profile-section">
-    <h3>Informações Básicas</h3>
-    <div class="profile-info">
-      <label for="username">Nome de usuário</label>
-      <input id="username" type="text" />
+
+<!-- Barra inferior -->
+<footer class="footer">
+  <button id="btnInicio" aria-label="Início">&#8962;</button> <!-- casa -->
+  <button id="btnCategoria" aria-label="Categorias">&#128193;</button> <!-- pasta/categoria -->
+  <button id="btnLive" aria-label="Live" class="live">&#128249;</button> <!-- câmera ao vivo -->
+  <button id="btnAnuncio" aria-label="Anúncios">&#128176;</button> <!-- dinheiro/money -->
+[04/06, 08:50] Ia: <select id="selectCategoria">
+        <option value="">Selecione uma categoria</option>
+        <option value="fetiches">Fetiches</option>
+        <option value="amador">Amador</option>
+        <option value="producao">Produção Profissional</option>
+        <option value="anal">Anal</option>
+      </select>
+      <p id="categoriaSelecionada" style="margin-top:15px; font-style: italic;">Nenhuma categoria selecionada.</p>
     </div>
-    <div class="profile-info">
-      <label for="email">Email</label>
-      <input id="email" type="email" />
+
+    <div id="tabLive" class="tab">
+      <h2>Live</h2>
+      <p>Apenas produtores e modelos podem iniciar lives.</p>
+      <p id="liveStatus"></p>
+      <button id="btnIniciarLive">Iniciar Live</button>
     </div>
-  </div>
-  <div class="profile-section" id="producer-section" style="display:none;">
-    <h3>Perfil Produtor/Modelo</h3>
-    <div class="profile-info">
-      <label for="card-balance">Saldo (USD)</label>
-      <input id="card-balance" type="text" readonly value="$0.00" />
+
+    <div id="tabAnuncios" class="tab">
+      <h2>Anúncios</h2>
+      <p>Aqui ficarão os anúncios.</p>
     </div>
-    <div class="profile-info">
-      <label for="upload-video">Enviar vídeo</label>
-      <input id="upload-video" type="file" accept="video/*" />
+
+    <div id="tabPerfil" class="tab">
+      <h2>Perfil</h2>
+      <div id="perfilConteudo">
+        <!-- Conteúdo dinâmico -->
+      </div>
     </div>
-    <button class="action-btn" id="upload-btn">Enviar vídeo</button>
-  </div>
-  <div class="profile-section">
-    <label for="user-type">Tipo de Conta</label>
-    <select id="user-type">
-      <option value="normal">Usuário Normal</option>
-      <option value="producer">Produtor/Modelo</option>
-[04/06, 08:30] Ia: </select>
-  </div>
+
+  </section>
+
+  <!-- Sidebar direito -->
+  <aside id="sidebar-right">
+[04/06, 08:50] Ia: <button id="btnNotificacoes" aria-label="Notificações">&#128276;</button> <!-- sino -->
+</footer>
+
+<!-- Sidebar direita -->
+<div class="sidebar">
+  <button id="btnSeguir" aria-label="Seguir">&#128100;<span style="font-size:18px; vertical-align:super;">+</span></button>
+  <button id="btnGostar" aria-label="Gostar">&#10084;</button> <!-- coração -->
+  <button id="btnComentar" aria-label="Comentar">&#128172;</button> <!-- balão de fala -->
+  <button id="btnBaixar" aria-label="Baixar">&#128229;</button> <!-- seta para baixo (download) -->
+  <button id="btnDenunciar" aria-label="Denunciar">&#9873;</button> <!-- bandeira -->
 </div>
 
 <script>
-  const video = document.getElementById('main-video');
-  const muteBtn = document.getElementById('mute-btn');
-  const fullscreenBtn = document.getElementById('fullscreen-btn');
-  const profileBtn = document.getElementById('profile-btn');
-  const profileModal = document.getElementById('profile-modal');
-  const closeProfileBtn = profileModal.querySelector('.close-btn');
-  const touchLeft = document.querySelector('.touch-left');
-  const touchRight = document.querySelector('.touch-right');
-  const userTypeSelect = document.getElementById('user-type');
-  const producerSection = document.getElementById('producer-section');
-  const cardBalanceInput = document.getElementById('card-balance');
+  // Variável simulando se o usuário está inscrito no canal para liberar baixar
+  let usuarioInscrito = false;
 
-  // Alternar mudo
-  muteBtn.addEventListener('click', () => {
-    video.muted = !video.muted;
-    // Troca ícone - para simplicidade, não muda SVG, só escurece botão
-    muteBtn.style.filter = video.muted ? 'invert(0.5)' : 'invert(1)';
-  });
+  // Modal maioridade
+  const modal = document.getElementById('modalMaioridade');
+  const btnSim = document.getElementById('btnSim');
+  const btnNao = document.getElementById('btnNao');
 
-  // Tela cheia
-  fullscreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      video.requestFullscreen().catch(() => {});
+  btnSim.onclick = () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  };
+  btnNao.onclick = () => {
+    alert('Você precisa ser maior de 18 anos para acessar este site.');
+    window.close();
+  };
+
+  // Botões barra inferior
+  document.getElementById('btnInicio').onclick = () => alert('Início clicado');
+[04/06, 08:50] Ia: document.getElementById('btnCategoria').onclick = () => alert('Categorias clicado');
+  document.getElementById('btnLive').onclick = () => alert('Live clicado');
+  document.getElementById('btnAnuncio').onclick = () => alert('Anúncios clicado');
+  document.getElementById('btnNotificacoes').onclick = () => alert('Notificações clicado');
+
+  // Botões header
+  document.getElementById('btnPesquisa').onclick = () => alert('Pesquisar clicado');
+  document.getElementById('btnPerfil').onclick = () => alert('Perfil clicado');
+
+  // Botões sidebar direita
+  document.getElementById('btnSeguir').onclick = () => alert('Seguir clicado');
+  document.getElementById('btnGostar').onclick = () => alert('Gostar clicado');
+  document.getElementById('btnComentar').onclick = () => alert('Comentar clicado');
+  document.getElementById('btnBaixar').onclick = () => {
+    if(usuarioInscrito) {
+      alert('Download permitido, iniciando...');
     } else {
-      document.exitFullscreen();
+      alert('Você precisa estar inscrito para baixar este vídeo.');
     }
-  });
+  };
+  document.getElementById('btnDenunciar').onclick = () => alert('Denunciar clicado');
 
-  // Toques avançar 10s e recuar 10s
-  touchLeft.addEventListener('click', () => {
-[04/06, 08:30] Ia: video.currentTime = Math.max(0, video.currentTime - 10);
-  );
-  touchRight.addEventListener('click', () => 
-    video.currentTime = Math.min(video.duration, video.currentTime + 10);
-  );
-
-  // Abrir e fechar perfil
-  profileBtn.addEventListener('click', () => 
-    profileModal.classList.add('active');
-  );
-  closeProfileBtn.addEventListener('click', () => 
-    profileModal.classList.remove('active');
-  );
-
-  // Mostrar seção produtor se tipo de conta mudar
-  userTypeSelect.addEventListener('change', () => 
-    if (userTypeSelect.value === 'producer') 
-      producerSection.style.display = 'block';
-      // Simula saldo, poderia ser puxado do backend
-      cardBalanceInput.value = '125.00';
+  // Vídeo toque para avançar/voltar 10s
+  const video = document.getElementById('videoPlayer');
+  video.addEventListener('click', (e) => {
+    const rect = video.getBoundingClientRect();
+[04/06, 08:50] Ia: const x = e.clientX - rect.left;
+    if(x > rect.width/2) {
+      video.currentTime = Math.min(video.duration, video.currentTime + 10);
     } else {
-      producerSection.style.display = 'none';
-      cardBalanceInput.value = '$0.00';
+      video.currentTime = Math.max(0, video.currentTime - 10);
     }
   });
-
-  // Simula envio vídeo produtor
-  document.getElementById('upload-btn').addEventListener('click', () => {
-    alert('Vídeo enviado! (Funcionalidade a implementar com backend)');
-  });
-
-  // Exemplo de fetch para carregar vídeos externos (API genérica)
-  async function carregarVideos() {
-    try {
-      // Exemplo fictício, você deve trocar pela API real que tiver acesso
-      const response = await fetch('https://api.example.com/videos');
-      const data = await response.json();
-[04/06, 08:30] Ia: // Aqui você faria lógica para popular a página com esses vídeos
-      console.log('Vídeos carregados da API:', data);
-    } catch (e) {
-      console.error('Erro ao carregar vídeos da API', e);
-    }
-  }
-  carregarVideos();
-
 </script>
 
 </body>
