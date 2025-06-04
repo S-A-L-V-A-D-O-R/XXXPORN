@@ -4,8 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XXXporn</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="https://img.icons8.com/?size=100&id=HAdDrhGGO64N&format=png&color=000000">
+    <style>
+        /* Reset e base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: white;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #222;
+            padding: 10px;
+        }
+
+        .navbar ul {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .navbar li {
+            list-style: none;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            padding: 20px;
+        }
+
+        /* Video */
+        .video-container {
+            width: 100%;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            background-color: black;
+        }
+
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .control-btn {
+            background-color: #333;
+            border: 1px solid #444;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .control-btn:hover {
+            background-color: #555;
+        }
+
+        /* Categorias */
+        .categories {
+            padding: 20px;
+        }
+
+        .category-list {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+
+        .category {
+            text-align: center;
+        }
+
+        .category img {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+        }
+
+        .category p {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -57,145 +156,48 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+        // Controle de vídeo
+        const videoPlayer = document.getElementById('videoPlayer');
+        const rewindButton = document.getElementById('rewind');
+        const forwardButton = document.getElementById('forward');
+        const muteButton = document.getElementById('mute');
+        const fullscreenButton = document.getElementById('fullscreen');
+
+        // Função para avançar 10 segundos
+        rewindButton.addEventListener('click', () => {
+            videoPlayer.currentTime -= 10;
+        });
+
+        // Função para retroceder 10 segundos
+        forwardButton.addEventListener('click', () => {
+            videoPlayer.currentTime += 10;
+        });
+
+        // Função para ativar/desativar som
+        muteButton.addEventListener('click', () => {
+            if (videoPlayer.muted) {
+                videoPlayer.muted = false;
+                muteButton.textContent = "🔊"; // Som ligado
+            } else {
+                videoPlayer.muted = true;
+                muteButton.textContent = "🔇"; // Som desligado
+            }
+        });
+
+        // Função para tela cheia
+        fullscreenButton.addEventListener('click', () => {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) { // Firefox
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) { // Chrome e Safari
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
+                videoPlayer.msRequestFullscreen();
+            }
+        });
+    </script>
+
 </body>
 </html>
-/* Reset e base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #181818;
-    color: white;
-    margin: 0;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* Navbar */
-.navbar {
-    background-color: #222;
-    padding: 10px;
-}
-
-.navbar ul {
-    display: flex;
-    justify-content: space-around;
-}
-
-.navbar li {
-    list-style: none;
-}
-
-.icon {
-    width: 24px;
-    height: 24px;
-}
-
-/* Conteúdo Principal */
-.main {
-    padding: 20px;
-}
-
-/* Video */
-.video-container {
-    width: 100%;
-    position: relative;
-}
-
-video {
-    width: 100%;
-    background-color: black;
-}
-
-.video-controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.control-btn {
-    background-color: #333;
-    border: 1px solid #444;
-    color: white;
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.control-btn:hover {
-    background-color: #555;
-}
-
-/* Categorias */
-.categories {
-    padding: 20px;
-}
-
-.category-list {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-}
-
-.category {
-    text-align: center;
-}
-
-.category img {
-    width: 150px;
-    height: 150px;
-    border-radius: 8px;
-}
-
-.category p {
-    margin-top: 10px;
-}
-// Controle de vídeo
-const videoPlayer = document.getElementById('videoPlayer');
-const rewindButton = document.getElementById('rewind');
-const forwardButton = document.getElementById('forward');
-const muteButton = document.getElementById('mute');
-const fullscreenButton = document.getElementById('fullscreen');
-
-// Função para avançar 10 segundos
-rewindButton.addEventListener('click', () => {
-    videoPlayer.currentTime -= 10;
-});
-
-// Função para retroceder 10 segundos
-forwardButton.addEventListener('click', () => {
-    videoPlayer.currentTime += 10;
-});
-
-// Função para ativar/desativar som
-muteButton.addEventListener('click', () => {
-    if (videoPlayer.muted) {
-        videoPlayer.muted = false;
-        muteButton.textContent = "🔊"; // Som ligado
-    } else {
-        videoPlayer.muted = true;
-        muteButton.textContent = "🔇"; // Som desligado
-    }
-});
-
-// Função para tela cheia
-fullscreenButton.addEventListener('click', () => {
-    if (videoPlayer.requestFullscreen) {
-        videoPlayer.requestFullscreen();
-    } else if (videoPlayer.mozRequestFullScreen) { // Firefox
-        videoPlayer.mozRequestFullScreen();
-    } else if (videoPlayer.webkitRequestFullscreen) { // Chrome e Safari
-        videoPlayer.webkitRequestFullscreen();
-    } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
-        videoPlayer.msRequestFullscreen();
-    }
-});
