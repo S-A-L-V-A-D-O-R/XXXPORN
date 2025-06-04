@@ -43,19 +43,20 @@
       filter: invert(100%);
     }
 
-    /* Barra lateral direita */
+    /* Barra lateral direita - centralizada verticalmente */
     .sidebar-right {
       position: fixed;
       right: 10px;
-      top: 60px;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       gap: 20px;
       z-index: 10;
     }
-    .sidebar-right button {
+[04/06, 05:47] Ia: .sidebar-right button {
       background: none;
-[04/06, 05:37] Ia: border: none;
+      border: none;
       cursor: pointer;
       position: relative;
       padding: 5px;
@@ -112,10 +113,10 @@
       font-size: 10px;
       gap: 2px;
       padding: 4px 6px;
-      transition: color 0.3s;
+[04/06, 05:47] Ia: transition: color 0.3s;
     }
     .footer button img {
-[04/06, 05:37] Ia: filter: invert(100%);
+      filter: invert(100%);
       width: 24px;
       height: 24px;
     }
@@ -155,9 +156,9 @@
       <span class="plus">+</span>
     </button>
     <button aria-label="Gostar">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/loading-heart.png" alt="Gostar" width="26" height="26"/>
+[04/06, 05:47] Ia: <img src="https://img.icons8.com/ios-filled/50/ffffff/loading-heart.png" alt="Gostar" width="26" height="26"/>
     </button>
-[04/06, 05:37] Ia: <button aria-label="Comentar">
+    <button aria-label="Comentar">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/comments.png" alt="Comentar" width="26" height="26"/>
     </button>
     <button aria-label="Baixar vídeo">
@@ -183,8 +184,8 @@
       <span>Live</span>
     </button>
     <button aria-label="Anúncios">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/ads.png" alt="Anúncios" width="26" height="26"/>
-[04/06, 05:37] Ia: <span>Anúncios</span>
+[04/06, 05:47] Ia: <img src="https://img.icons8.com/ios-filled/50/ffffff/ads.png" alt="Anúncios" width="26" height="26"/>
+      <span>Anúncios</span>
     </button>
     <button aria-label="Notificações">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/alarm.png" alt="Notificações" width="26" height="26"/>
