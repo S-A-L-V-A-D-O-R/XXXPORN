@@ -2,621 +2,373 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Xxxporn - Plataforma</title>
-  <style>
-    /* Reset básico */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: Arial, sans-serif;
-[04/06, 07:45] Ia: color: white;
-    }
-    body {
-      background-color: #000;
-      overflow-x: hidden;
-    }
-    button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: white;
-    }
-    /* Layout geral */
-    .header, .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 12px;
-      background: #111;
-      position: fixed;
-      width: 100%;
-      z-index: 100;
-    }
-    .header {
-      top: 0;
-      height: 50px;
-    }
-    .footer {
-      bottom: 0;
-      height: 60px;
-      border-top: 1px solid #222;
-    }
-    /* Ícones topo */
-    #search-btn, #profile-btn {
-      font-size: 26px;
-    }
-    /* Pesquisa popup */
-    #search-popup {
-      position: fixed;
-      top: 50px;
-      left: 0; right: 0;
-      background: #111;
-      padding: 10px;
-      display: none;
-      z-index: 101;
-    }
-    #search-popup input {
-      width: 100%;
-      padding: 8px;
-      font-size: 18px;
-      background: #222;
-      border: none;
-      border-radius: 4px;
-      color: white;
-    }
-    /* Barra inferior */
-    .footer button {
-      flex: 1;
-      font-size: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
-[04/06, 07:45] Ia: position: relative;
-    }
-    .footer button.live {
-      color: #ff0040;
-      font-size: 32px;
-      margin: 0 8px;
-    }
-    /* Conteúdo principal */
-    #main-content {
-      padding-top: 50px;
-      padding-bottom: 60px;
-      min-height: calc(100vh - 110px);
-      overflow-y: auto;
-    }
-    /* Vídeo player container */
-    .video-container {
-      position: relative;
-      max-width: 480px;
-      margin: 20px auto;
-      background: #111;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    video {
-      width: 100%;
-      display: block;
-      background: black;
-    }
-    /* Controles transparentes dentro do vídeo */
-    .video-controls {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 0.8;
-      color: white;
-      font-size: 20px;
-      pointer-events: auto;
-    }
-    .video-controls button {
-      background: rgba(0,0,0,0.5);
-      border-radius: 50%;
-      padding: 6px 10px;
-    }
-    /* Lados direitos com botões verticais */
-    .side-buttons {
-      position: fixed;
-      right: 8px;
-      top: 60%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 90;
-[04/06, 07:45] Ia: }
-    .side-buttons button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 22px;
-      color: white;
-      position: relative;
-    }
-    .side-buttons button .plus-badge {
-      position: absolute;
-      bottom: -6px;
-      right: -6px;
-      background: #ff0040;
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      font-size: 12px;
-      color: white;
-      font-weight: bold;
-      line-height: 16px;
-      text-align: center;
-    }
-    /* Perfil e cadastro */
-    #profile-section {
-      padding: 16px;
-      max-width: 480px;
-      margin: 10px auto;
-      background: #111;
-      border-radius: 10px;
-    }
-    #profile-section h2 {
-      margin-bottom: 12px;
-    }
-    #profile-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    #profile-tabs button {
-      flex: 1;
-      padding: 8px;
-      background: #222;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-    #profile-tabs button.active {
-      background: #ff0040;
-    }
-    #profile-content > div {
-      display: none;
-    }
-    #profile-content > div.active {
-      display: block;
-    }
-    /* Categorias list */
-    #categories-list {
-      max-width: 480px;
-      margin: 10px auto;
-      padding: 10px;
-[04/06, 07:45] Ia: background: #111;
-      border-radius: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-    #categories-list button {
-      background: #222;
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-weight: bold;
-      cursor: pointer;
-      color: white;
-    }
-    /* Cores e destaque */
-    .active-cat {
-      background: #ff0040 !important;
-    }
-    /* Live */
-    #live-section {
-      max-width: 480px;
-      margin: 10px auto;
-      background: #111;
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-    }
-    #live-section .blocked {
-      color: #ff5555;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    /* Form cadastro */
-    #signup-section {
-      max-width: 480px;
-      margin: 10px auto;
-      background: #111;
-      border-radius: 10px;
-      padding: 16px;
-      color: white;
-    }
-    #signup-section label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-    #signup-section input, #signup-section select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border-radius: 6px;
-      border: none;
-      background: #222;
-      color: white;
-    }
-    #signup-section button {
-      margin-top: 16px;
-      background: #ff0040;
-[04/06, 07:45] Ia: border-radius: 6px;
-      font-weight: bold;
-      padding: 10px;
-      color: white;
-    }
-    /* Mensagem para inscritos baixar vídeos */
-    #download-warning {
-      color: #ff0040;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 10px;
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Xxxporn - Plataforma</title>
+<style>
+  /* Reset básico */
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Topo */
+  header {
+    height: 48px;
+    background: #121212;
+    display: flex;
+[04/06, 08:06] Ia: align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+  header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: invert(100%);
+    width: 32px;
+    height: 32px;
+  }
+  header button img {
+    width: 100%;
+    height: 100%;
+  }
+  /* Conteúdo central */
+  main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+  }
+  video {
+    max-height: 80vh;
+    border-radius: 10px;
+    background: #222;
+  }
+  /* Controles dentro do vídeo */
+  .video-controls {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    opacity: 0.6;
+  }
+  .video-controls button {
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: opacity 0.3s;
+  }
+  .video-controls button:hover {
+    opacity: 1;
+  }
+
+  /* Botões laterais */
+  .side-buttons {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .side-buttons button {
+    background: none;
+[04/06, 08:06] Ia: border: none;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+  }
+  .side-buttons img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+  }
+  .side-buttons .follow {
+    position: relative;
+  }
+  .side-buttons .follow .plus {
+    position: absolute;
+    bottom: 0;
+    right: -6px;
+    background: #ff004f;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Barra inferior */
+  nav.bottom-nav {
+    height: 56px;
+    background: #121212;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #222;
+  }
+  nav.bottom-nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: invert(100%);
+    width: 32px;
+    height: 32px;
+    position: relative;
+  }
+  nav.bottom-nav button.live-icon {
+    filter: none;
+    width: 40px;
+    height: 40px;
+  }
+  nav.bottom-nav button.live-icon img {
+    filter: drop-shadow(0 0 5px red);
+  }
+  nav.bottom-nav button img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Pesquisa no topo esquerda */
+[04/06, 08:06] Ia: #search-panel {
+    position: fixed;
+    top: 52px;
+    left: 12px;
+    background: #222;
+    padding: 12px;
+    border-radius: 6px;
+    display: none;
+    z-index: 10;
+  }
+  #search-panel input {
+    background: #121212;
+    border: none;
+    color: white;
+    padding: 8px;
+    width: 200px;
+    border-radius: 4px;
+  }
+
+  /* Perfil painel */
+  #profile-panel {
+    position: fixed;
+    top: 52px;
+    right: 12px;
+    background: #222;
+    padding: 12px;
+    border-radius: 6px;
+    width: 250px;
+    display: none;
+    z-index: 10;
+  }
+  #profile-panel h3 {
+    margin-bottom: 8px;
+  }
+  #profile-panel section {
+    margin-bottom: 12px;
+  }
+  #profile-panel button {
+    margin-top: 8px;
+    padding: 8px;
+    width: 100%;
+    background: #ff004f;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+</style>
 </head>
 <body>
 
-  <!-- Cabeçalho -->
-  <header class="header">
-    <button id="search-btn" aria-label="Pesquisar">&#128269;</button>
-    <button id="profile-btn" aria-label="Perfil">&#128100;</button>
-  </header>
+<header>
+  <button id="btn-search" aria-label="Pesquisar">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/search--v1.png" alt="Pesquisar"/>
+  </button>
+  <button id="btn-profile" aria-label="Perfil">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/male-user.png" alt="Perfil"/>
+  </button>
+</header>
 
-  <!-- Popup Pesquisa -->
-  <div id="search-popup">
-    <input type="text" id="search-input" placeholder="Buscar vídeos..." />
+<div id="search-panel">
+  <input type="text" placeholder="Pesquisar vídeos ou usuários..." />
+</div>
+[04/06, 08:06] Ia: <div id="profile-panel">
+  <h3>Perfil do Usuário</h3>
+  <section>
+    <strong>Nome:</strong> João Salvador<br/>
+    <strong>Usuário:</strong> @joaosalvador<br/>
+    <strong>Seguidores:</strong> 1234<br/>
+    <strong>Inscritos:</strong> 456<br/>
+  </section>
+  <section>
+    <button id="btn-edit-profile">Editar Perfil</button>
+  </section>
+  <section>
+    <button id="btn-logout">Sair</button>
+  </section>
+</div>
+
+<main>
+  <video id="video-player" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" controls autoplay muted loop></video>
+
+  <div class="video-controls">
+    <button id="btn-backward" title="Voltar 10 segundos">⏪</button>
+    <button id="btn-play-pause" title="Play/Pause">⏯️</button>
+    <button id="btn-forward" title="Avançar 10 segundos">⏩</button>
+    <button id="btn-mute" title="Silenciar/Ativar som">🔊</button>
+    <button id="btn-fullscreen" title="Tela cheia">⛶</button>
   </div>
+</main>
 
-  <!-- Conteúdo Principal -->
-  <main id="main-content">
-    <!-- Área vídeos -->
-    <div id="videos-feed"></div>
+<div class="side-buttons">
+  <button class="follow" title="Seguir canal">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/male-user.png" alt="Perfil canal" />
+    <div class="plus">+</div>
+    Seguir
+  </button>
+  <button title="Curtir vídeo">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/loading-heart.png" alt="Curtir" />
+[04/06, 08:06] Ia: </button>
+  <button title="Comentar vídeo">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/comments.png" alt="Comentar" />
+  </button>
+  <button title="Baixar vídeo">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/download--v1.png" alt="Baixar" />
+  </button>
+</div>
 
-    <!-- Categorias -->
-    <div id="categories-list" style="display:none;"></div>
+<nav class="bottom-nav" aria-label="Navegação principal">
+  <button id="btn-home" title="Início">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Início" />
+  </button>
+  <button id="btn-category" title="Categorias">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/category.png" alt="Categorias" />
+  </button>
+  <button id="btn-live" title="Live" class="live-icon">
+    <img src="https://img.icons8.com/fluency/48/ff004f/live-video-on--v1.png" alt="Live" />
+  </button>
+  <button id="btn-ads" title="Anúncios">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/ads.png" alt="Anúncios" />
+  </button>
+  <button id="btn-notifications" title="Notificações">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/alarm.png" alt="Notificações" />
+  </button>
+</nav>
 
-    <!-- Live -->
-    <div id="live-section" style="display:none;">
-      <h2>Live Streaming</h2>
-      <div id="live-content"></div>
-    </div>
+<script>
+  const video = document.getElementById('video-player');
+  const btnPlayPause = document.getElementById('btn-play-pause');
+  const btnBackward = document.getElementById('btn-backward');
+[04/06, 08:06] Ia: const btnForward = document.getElementById('btn-forward');
+  const btn
+[04/06, 08:07] Ia: 
+```js
+  const btnMute = document.getElementById('btn-mute');
+  const btnFullscreen = document.getElementById('btn-fullscreen');
 
-    <!-- Perfil -->
-    <section id="profile-section" style="display:none;">
-      <h2>Perfil</h2>
-      <div id="profile-tabs">
-        <button class="tab-btn active" data-tab="info">Informações</button>
-        <button class="tab-btn" data-tab="ganhos">Ganhos</button>
-[04/06, 07:45] Ia: <button class="tab-btn" data-tab="subs">Subscrições</button>
-      </div>
-      <div id="profile-content">
-        <div id="tab-info" class="active">
-          <p><strong>Nome:</strong> <span id="profile-name"></span></p>
-          <p><strong>Email:</strong> <span id="profile-email"></span></p>
-          <p><strong>Tipo:</strong> <span id="profile-type"></span></p>
-          <p><strong>Seguidores:</strong> <span id="profile-followers">0</span></p>
-        </div>
-        <div id="tab-ganhos">
-          <p>Saldo atual: <strong>$<span id="profile-balance">0.00</span></strong></p>
-          <button id="withdraw-btn">Retirar dinheiro</button>
-        </div>
-        <div id="tab-subs">
-          <p>Subscritos:</p>
-          <ul id="profile-subs-list"></ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Cadastro -->
-    <section id="signup-section" style="display:none;">
-      <h2>Cadastro</h2>
-      <form id="signup-form">
-        <label for="username">Nome de usuário</label>
-        <input type="text" id="username" required />
-        <label for="email">Email</label>
-        <input type="email" id="email" required />
-        <label for="user-type">Tipo de conta</label>
-        <select id="user-type" required>
-          <option value="">Selecione...</option>
-[04/06, 07:45] Ia: <option value="normal">Usuário Normal</option>
-          <option value="produtor">Produtor</option>
-          <option value="modelo">Modelo</option>
-        </select>
-        <label id="doc-label" style="display:none;">Enviar documento (produtor/modelo)</label>
-        <input type="file" id="doc-upload" style="display:none;" />
-        <button type="submit">Cadastrar</button>
-      </form>
-
-```html
-    </section>
-  </main>
-
-  <!-- Botões laterais direita -->
-  <div class="side-buttons">
-    <button id="follow-btn" aria-label="Seguir">➕<span class="plus-badge">+</span></button>
-    <button id="like-btn" aria-label="Curtir">❤️</button>
-    <button id="comment-btn" aria-label="Comentar">💬</button>
-    <button id="download-btn" aria-label="Baixar vídeo">⬇️</button>
-  </div>
-
-  <!-- Barra inferior -->
-  <footer class="footer">
-    <button id="home-btn" aria-label="Início">🏠<small>Início</small></button>
-    <button id="categories-btn" aria-label="Categorias">📂<small>Categorias</small></button>
-    <button id="live-btn" class="live" aria-label="Live">🔴<small>Live</small></button>
-    <button id="ads-btn" aria-label="Anúncios">📢<small>Anúncios</small></button>
-    <button id="notifications-btn" aria-label="Notificações">🔔<small>Notifs</small></button>
-  </footer>
-
-  <div id="download-warning">Só pode baixar se inscrito no canal!</div>
-
-  <script>
-    // Estado global simulado
-    let currentUser = null; // objeto com {username, email, type, followers, balance, subs}
-[04/06, 07:46] Ia: let currentTab = "videos"; // "videos", "categories", "live", "ads", "profile", "signup"
-    let currentCategory = null; // categoria selecionada
-    let videos = [
-      {id:1, title:"Vídeo 1", category:"Hot", url:"https://www.w3schools.com/html/mov_bbb.mp4", channel:"produtor1"},
-      {id:2, title:"Vídeo 2", category:"New", url:"https://www.w3schools.com/html/movie.mp4", channel:"modelo1"},
-      {id:3, title:"Vídeo 3", category:"Hot", url:"https://www.w3schools.com/html/mov_bbb.mp4", channel:"produtor2"},
-    ];
-    let categories = ["Hot", "New", "Popular", "Trending"];
-
-    // Cadastro simulado
-    function signupUser(data){
-      // Simplesmente salva no currentUser
-      currentUser = {
-        username: data.username,
-        email: data.email,
-        type: data.type,
-        followers: 0,
-        balance: 0.0,
-        subs: [],
-        channel: data.username.toLowerCase().replace(/\s/g,'')
-      };
-      alert("Cadastro concluído como " + currentUser.type);
-      showTab("videos");
-      renderProfile();
+  // Play/Pause
+  btnPlayPause.addEventListener('click', () => {
+    if(video.paused) {
+      video.play();
+      btnPlayPause.textContent = '⏸️';
+    } else {
+      video.pause();
+      btnPlayPause.textContent = '▶️';
     }
+  });
 
-    // Renderizar vídeos conforme categoria ou todos
-    function renderVideos(){
-      const feed = document.getElementById("videos-feed");
-      feed.innerHTML = "";
-[04/06, 07:46] Ia: let filteredVideos = currentCategory ? videos.filter(v => v.category === currentCategory) : videos;
-      filteredVideos.forEach(v=>{
-        const div = document.createElement("div");
-        div.className = "video-container";
-        div.innerHTML = `
-          <video src="v.url" controls playsinline></video>
-          <p style="text-align:center; margin:5px 0;">{v.title} - Canal: ${v.channel}</p>
-        `;
-        feed.appendChild(div);
-      });
+  // Avançar 10s
+  btnForward.addEventListener('click', () => {
+    video.currentTime = Math.min(video.duration, video.currentTime + 10);
+  });
+
+  // Voltar 10s
+  btnBackward.addEventListener('click', () => {
+    video.currentTime = Math.max(0, video.currentTime - 10);
+  });
+
+  // Mudo/Ligar som
+  btnMute.addEventListener('click', () => {
+    video.muted = !video.muted;
+    btnMute.textContent = video.muted ? '🔇' : '🔊';
+  });
+
+  // Fullscreen
+  btnFullscreen.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      video.requestFullscreen();
+    } else {
+      document.exitFullscreen();
     }
+  });
 
-    // Renderizar categorias
-    function renderCategories(){
-      const cats = document.getElementById("categories-list");
-      cats.innerHTML = "";
-      categories.forEach(cat=>{
-        const btn = document.createElement("button");
-        btn.textContent = cat;
-        if(cat === currentCategory) btn.classList.add("active-cat");
-        btn.onclick = () => {
-          currentCategory = cat;
-          renderCategories();
-          renderVideos();
-          showTab("videos");
-        }
-        cats.appendChild(btn);
-      });
-    }
+  // Toggle painel pesquisa
+  const btnSearch = document.getElementById('btn-search');
+  const searchPanel = document.getElementById('search-panel');
+  btnSearch.addEventListener('click', () => {
+[04/06, 08:07] Ia: searchPanel.style.display = searchPanel.style.display === 'block' ? 'none' : 'block';
+  });
 
-    // Renderizar perfil
-    function renderProfile(){
-      if(!currentUser) return;
-      document.getElementById("profile-name").textContent = currentUser.username;
-      document.getElementById("profile-email").textContent = currentUser.email;
-[04/06, 07:46] Ia: document.getElementById("profile-type").textContent = currentUser.type;
-      document.getElementById("profile-followers").textContent = currentUser.followers;
-      document.getElementById("profile-balance").textContent = currentUser.balance.toFixed(2);
-      const subsList = document.getElementById("profile-subs-list");
-      subsList.innerHTML = "";
-      currentUser.subs.forEach(sub=>{
-        let li = document.createElement("li");
-        li.textContent = sub;
-        subsList.appendChild(li);
-      });
-    }
+  // Toggle painel perfil
+  const btnProfile = document.getElementById('btn-profile');
+  const profilePanel = document.getElementById('profile-panel');
+  btnProfile.addEventListener('click', () => {
+    profilePanel.style.display = profilePanel.style.display === 'block' ? 'none' : 'block';
+  });
 
-    // Mostra aba principal de acordo com id
-    function showTab(tab){
-      currentTab = tab;
-      // Esconde tudo
-      document.getElementById("videos-feed").style.display = "none";
-      document.getElementById("categories-list").style.display = "none";
-      document.getElementById("live-section").style.display = "none";
-      document.getElementById("profile-section").style.display = "none";
-      document.getElementById("signup-section").style.display = "none";
-      document.getElementById("search-popup").style.display = "none";
-      document.getElementById("download-warning").style.display = "none";
+  // Botões navegação inferior (exemplo alertas)
+  document.getElementById('btn-home').addEventListener('click', () => {
+    alert('Voltar para página inicial com vídeos infinitos');
+    // Aqui pode colocar função para carregar vídeos
+  });
 
-      if(tab === "videos"){
-        document.getElementById("videos-feed").style.display = "block";
-        renderVideos();
-      }
-[04/06, 07:46] Ia: else if(tab === "categories")
-        document.getElementById("categories-list").style.display = "flex";
-        renderCategories();
-      
-      else if(tab === "live")
-        document.getElementById("live-section").style.display = "block";
-        renderLive();
-      
-      else if(tab === "ads")
-        alert("Anúncios - Ainda não implementado.");
-        showTab("videos");
-      
-      else if(tab === "profile")
-        if(!currentUser)
-          showTab("signup");
-          return;
-        
-        document.getElementById("profile-section").style.display = "block";
-        renderProfile();
-      
-      else if(tab === "signup")
-        document.getElementById("signup-section").style.display = "block";
-      
+  document.getElementById('btn-category').addEventListener('click', () => {
+    alert('Abrir categorias');
+    // Aqui abrir lista de categorias
+  });
 
-    // Live - só produtores e modelos podem entrar
-    function renderLive()
-      const liveContent = document.getElementById("live-content");
-      if(!currentUser || (currentUser.type !== "produtor"        currentUser.type !== "modelo"))
-        liveContent.innerHTML = `<p class="blocked">Somente produtores e modelos podem iniciar Live.</p>`;
-       else 
-        liveContent.innerHTML = `<p>Inicie sua transmissão ao vivo aqui,{currentUser.username}!</p>`;
-      }
-    }
+  document.getElementById('btn-live').addEventListener('click', () => {
+    alert('Entrar na Live (somente produtor/modelo)');
+    // Aqui lógica para live
+  });
 
-    // Eventos botões footer
-    document.getElementById("home-btn").onclick = () => {
-[04/06, 07:47] Ia: currentCategory = null;
-      showTab("videos");
-    }
-    document.getElementById("categories-btn").onclick = () => showTab("categories");
-    document.getElementById("live-btn").onclick = () => showTab("live");
-    document.getElementById("ads-btn").onclick = () => showTab("ads");
-    document.getElementById("notifications-btn").onclick = () => alert("Notificações ainda não implementadas.");
+  document.getElementById('btn-ads').addEventListener('click', () => {
+    alert('Abrir anúncios');
+    // Aqui mostrar anúncios
+  });
 
-    // Pesquisa
-    document.getElementById("search-btn").onclick = () => {
-      const popup = document.getElementById("search-popup");
-      popup.style.display = popup.style.display === "block" ? "none" : "block";
-      document.getElementById("search-input").focus();
-    };
+  document.getElementById('btn-notifications').addEventListener('click', () => {
+    alert('Mostrar notificações');
+  });
 
-    // Perfil botão
-    document.getElementById("profile-btn").onclick = () => {
-      if(currentUser) showTab("profile");
-      else showTab("signup");
-    };
+</script>
 
-    // Cadastro
-    document.getElementById("signup-form").onsubmit = (e) => {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const type = document.getElementById("user-type").value;
-      if(!username || !email || !type) {
-        alert("Preencha todos os campos.");
-        return;
-      }
-[04/06, 07:47] Ia: if(type === "produtor" || type === "modelo"){
-        // Simula taxa + documento
-        alert("Será cobrada uma taxa e solicitados documentos. (Simulação)");
-      }
-      signupUser({username,email,type});
-    };
-
-    // Mostrar campo doc upload se produtor ou modelo
-    document.getElementById("user-type").onchange = (e) => {
-      const val = e.target.value;
-      const label = document.getElementById("doc-label");
-      const upload = document.getElementById("doc-upload");
-      if(val === "produtor" || val === "modelo"){
-        label.style.display = "block";
-        upload.style.display = "block";
-      } else {
-        label.style.display = "none";
-        upload.style.display = "none";
-      }
-    };
-
-    // Tabs perfil
-    document.querySelectorAll("#profile-tabs .tab-btn").forEach(btn=>{
-      btn.onclick = () => {
-        document.querySelectorAll("#profile-tabs .tab-btn").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        let
-
-```html
-        let tab = btn.getAttribute("data-tab");
-        document.querySelectorAll("#profile-content > div").forEach(div=>{
-          div.classList.remove("active");
-        });
-        document.getElementById("tab-" + tab).classList.add("active");
-      }
-    });
-
-    // Botão retirar dinheiro (simulado)
-    document.getElementById("withdraw-btn").onclick = () => {
-      if(!currentUser) return alert("Faça login para retirar dinheiro.");
-      if(currentUser.balance <= 0) return alert("Saldo insuficiente.");
-      alert(`Você retirou 
-    
-{currentUser.balance.toFixed(2)} com sucesso!`);
-      currentUser.balance = 0;
-      renderProfile();
-    };
-
-    // Botões laterais
-    const followBtn = document.getElementById("follow-btn");
-    const likeBtn = document.getElementById("like-btn");
-    const commentBtn = document.getElementById("comment-btn");
-    const downloadBtn = document.getElementById("download-btn");
-
-    let following = false;
-    followBtn.onclick = () => {
-      if(!currentUser) return alert("Cadastre-se para seguir canais.");
-      following = !following;
-      followBtn.style.color = following ? "#ff0040" : "white";
-[04/06, 07:49] Ia: followBtn.querySelector(".plus-badge").style.display = following ? "none" : "inline";
-      alert(following ? "Seguindo canal!" : "Deixou de seguir canal.");
-    };
-
-    let liked = false;
-    likeBtn.onclick = () => {
-      if(!currentUser) return alert("Cadastre-se para curtir.");
-      liked = !liked;
-      likeBtn.style.color = liked ? "#ff0040" : "white";
-      alert(liked ? "Você curtiu o vídeo!" : "Você descurtiu o vídeo.");
-    };
-
-    commentBtn.onclick = () => {
-      if(!currentUser) return alert("Cadastre-se para comentar.");
-      const comment = prompt("Digite seu comentário:");
-      if(comment) alert("Comentário enviado!");
-    };
-
-    downloadBtn.onclick = () => {
-      if(!currentUser) return alert("Cadastre-se para baixar vídeos.");
-      // Simula verificar inscrição no canal do vídeo atual
-      const subscribed = currentUser.subs.includes("produtor1"); // Exemplo fixo
-      if(!subscribed){
-        document.getElementById("download-warning").style.display = "block";
-        setTimeout(() => {
-          document.getElementById("download-warning").style.display = "none";
-        }, 3000);
-        return;
-      }
-      alert("Download iniciado!");
-    };
-
-    // Inicialização da página
-    showTab("videos");
-  </script>
 </body>
 </html>
 ```
